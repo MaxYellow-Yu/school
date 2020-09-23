@@ -53,14 +53,17 @@
                     document.getElementById("table.nickname").innerHTML
                     = "灯笼鳖、<b class=\"highlight\">身残志坚</b>、<b class=\"highlight\">独臂大侠</b>、"
                     + "<b class=\"highlight\">倚老卖老</b>"; 
-                    document.getElementById("table.img").src = "./img/wyx.PNG"; 
+                    document.getElementById("table.img").src = "./img/wyx.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML
                     = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
                     document.getElementById("table.wife").innerHTML = "<b class=\"highlight\">4.1×10<sup>650</sup></b>"; 
-                    document.getElementById("table.defeat").innerHTML = "一龙指"; 
+                    document.getElementById("table.defeat").innerHTML = "一龙指、弯尺神功"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('马伯驹')\" style=\"cursor: pointer\">马伯驹</b>"; 
+                    document.getElementById("table.skill").innerHTML = "狂暴"; 
                     return "Completed!"; 
                 }
                 else if (name == "姚宗昊")
@@ -75,7 +78,7 @@
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "沙雕"; 
                     document.getElementById("table.nickname").innerHTML = "莎迪奥"; 
-                    document.getElementById("table.img").src = "./img/yzh.PNG"; 
+                    document.getElementById("table.img").src = "./img/yzh.png"; 
                     document.getElementById("table.father").innerHTML = "莎士比亚"; 
                     document.getElementById("table.mother").innerHTML = "安妮·海瑟薇"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
@@ -83,6 +86,8 @@
                     = "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "釜底抽薪"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "扯淡、开车"; 
                     return "Completed!"; 
                 }
                 if (name == "阚云雷")
@@ -97,7 +102,7 @@
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "鳖"; 
                     document.getElementById("table.nickname").innerHTML = "胖头鳖、杰尼杰尼"; 
-                    document.getElementById("table.img").src = "./img/kyl.PNG"; 
+                    document.getElementById("table.img").src = "./img/kyl.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
@@ -105,6 +110,34 @@
                     = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "养父"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
+                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
+                    document.getElementById("table.skill").innerHTML = "体锻"; 
+                    return "Completed!"; 
+                }
+                if (name == "孙博为")
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "鸟"; 
+                    document.getElementById("table.nickname").innerHTML = "SUBWAY、小博为、大鸟"; 
+                    document.getElementById("table.img").src = "./img/sbw.png"; 
+                    document.getElementById("table.father").innerHTML = "无"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
+                    document.getElementById("table.ad-father").innerHTML
+                    = "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "爷爷以及养父"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "挨打"; 
                     return "Completed!"; 
                 }
                 if (name == "马伯驹")
@@ -120,11 +153,14 @@
                     document.getElementById("table.nation").innerHTML = "鳖"; 
                     document.getElementById("table.nickname").innerHTML = "中华鳖"; 
                     document.getElementById("table.img").src = "./img/mbj.png"; 
-                    document.getElementById("table.father").innerHTML = "王聿煊"; 
+                    document.getElementById("table.father").innerHTML
+                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
                     document.getElementById("table.mother").innerHTML = "4.1×10<sup>650</sup>"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "体锻"; 
                     return "Completed!"; 
                 }
                 if (name == "俞伯驹")
@@ -145,6 +181,10 @@
                     document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>、"
+                    + "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    document.getElementById("table.skill").innerHTML = "所有"; 
                     return "Completed!"; 
                 }
                 window.location.reload(); 
@@ -184,6 +224,8 @@
                 <tr><td>养父</td><td id="table.ad-father"></td></tr>
                 <tr><td>妻子</td><td id="table.wife"></td></tr>
                 <tr><td>克星</td><td id="table.defeat"></td></tr>
+                <tr><td>子女</td><td id="table.children"></td></tr>
+                <tr><td>技能</td><td id="table.skill"></td></tr>
             </tbody>
         </table>
     </body>
