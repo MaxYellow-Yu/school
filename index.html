@@ -26,20 +26,30 @@
             {
                 window.open(webUrl); 
             }
-            window.onload = function () {
-                let name = prompt("Enter the one whose resume you wanna know: ", "王聿煊"); 
-                changeName(name); 
+            function open_web(webUrl)
+            {
+                location = webUrl; 
             }
             var chkName = ""; 
             var greenName = ["曾楚笑", "范语涵", "钱锦鸿", "孙博为", "王聿煊", "姚宗昊", "张田泽宇", "赵承铭"]; 
+            var openArea = localStorage.getItem("school.resume.subject"); 
+            window.onload = function () {
+                if (localStorage.getItem("school.resume.logged") == null) open_web("./login/"); 
+                localStorage.removeItem("school.resume.logged"); 
+                openArea = localStorage.getItem("school.resume.subject"); 
+                let name = localStorage.getItem("school.resume.name"); 
+                if (changeName(name) == "Resume not found. ") open_web("./login/"); 
+            }
             function changeName(name)
             {
+                let lstName = chkName; 
+                let lstImage = document.getElementById("table.img").src; 
                 chkName = name; 
                 document.getElementById("head.name").innerHTML = name; 
                 document.getElementById("head.name.green").innerHTML = name; 
                 document.getElementById("table.name").innerHTML = name; 
                 document.getElementById("table.img").src = "./img/" + name + ".png"; 
-                if (name == "王聿煊")
+                if (name == "王聿煊" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -66,7 +76,7 @@
                     document.getElementById("table.skill").innerHTML = "狂暴"; 
                     return "Completed!"; 
                 }
-                else if (name == "姚宗昊")
+                else if (name == "姚宗昊" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -90,7 +100,7 @@
                     document.getElementById("table.skill").innerHTML = "扯淡、开车"; 
                     return "Completed!"; 
                 }
-                if (name == "阚云雷")
+                if (name == "阚云雷" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -112,11 +122,12 @@
                     document.getElementById("table.defeat").innerHTML = "养父"; 
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
-                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
+                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>、"
+                    + "<b onclick=\"changeName('曾楚笑')\" style=\"cursor: pointer\">曾楚笑</b>"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     return "Completed!"; 
                 }
-                if (name == "孙博为")
+                if (name == "孙博为" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -140,7 +151,31 @@
                     document.getElementById("table.skill").innerHTML = "挨打"; 
                     return "Completed!"; 
                 }
-                if (name == "马伯驹")
+                if (name == "曾楚笑" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男女"; 
+                    document.getElementById("table.nation").innerHTML = "不明"; 
+                    document.getElementById("table.nickname").innerHTML = "玛卡巴卡、巴黎超模"; 
+                    document.getElementById("table.img").src = "./img/zcx.png"; 
+                    document.getElementById("table.father").innerHTML = "无"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
+                    document.getElementById("table.ad-father").innerHTML
+                    = "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "不明"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "不明"; 
+                    return "Completed!"; 
+                }
+                if (name == "马伯驹" && (openArea == "Ybj" || openArea == "All"))
                 {
                     document.getElementById("head.name").classList.remove("yellowname"); 
                     document.getElementById("head.name").onclick = function(){}; 
@@ -163,7 +198,7 @@
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     return "Completed!"; 
                 }
-                if (name == "俞伯驹")
+                if (name == "俞伯驹" && (openArea == "Ybj" || openArea == "All"))
                 {
                     document.getElementById("head.name").classList.remove("yellowname"); 
                     document.getElementById("head.name").onclick = function(){}; 
@@ -187,7 +222,12 @@
                     document.getElementById("table.skill").innerHTML = "所有"; 
                     return "Completed!"; 
                 }
-                window.location.reload(); 
+                name = lstName; 
+                chkName = lstName; 
+                document.getElementById("head.name").innerHTML = name; 
+                document.getElementById("head.name.green").innerHTML = name; 
+                document.getElementById("table.name").innerHTML = name; 
+                document.getElementById("table.img").src = lstImage; 
                 return "Resume not found. "; 
             }
             function greening()

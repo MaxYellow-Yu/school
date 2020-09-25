@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>简历 - 身份核验</title>
+        <style>
+            .greenname {
+                background: #82ca13;
+                color: green;
+                border: 1px solid green;
+                border-radius: 0.1em;
+            }
+            .yellowname {
+                background: #82ca13;
+                color: #f9cf82;
+                border: 1px solid green;
+                border-radius: 0.1em;
+            }
+            .highlight {
+                color: red;
+            }
+        </style>
+        <script>
+            function new_web(webUrl)
+            {
+                window.open(webUrl); 
+            }
+            function open_web(webUrl)
+            {
+                location = webUrl; 
+            }
+            function login()
+            {
+                let password = document.getElementById("school-resume-login-password").value; 
+                let name = document.getElementById("school-resume-login-name").value; 
+                if (password == "resume1234!")
+                {
+                    localStorage.setItem("school.resume.subject", "All"); 
+                    localStorage.setItem("school.resume.name", name); 
+                    localStorage.setItem("school.resume.logged", "logged"); 
+                    open_web("../"); 
+                }
+                else if (password == "ybj1827!")
+                {
+                    localStorage.setItem("school.resume.subject", "Ybj"); 
+                    localStorage.setItem("school.resume.name", name); 
+                    localStorage.setItem("school.resume.logged", "logged"); 
+                    open_web("../"); 
+                }
+                else
+                {
+                    alert("Wrong Password!"); 
+                    return; 
+                }
+            }
+        </script>
+    </head>
+    <body onkeypress="if (event.keyCode == 13) login()">
+        <h1>身份核验</h1>
+        <small>Password: </small><input id="school-resume-login-password" placeholder="Enter the password"
+        type="password" value="ybj1827!"><br>
+        <small>Name to Find: </small><input id="school-resume-login-name" value="俞伯驹"
+        placeholder="Enter whose resume to find"><br>
+        <button onclick="login()">Login</button>
+    </body>
+</html>
