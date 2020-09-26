@@ -188,9 +188,18 @@
                     document.getElementById("table.nation").innerHTML = "鳖"; 
                     document.getElementById("table.nickname").innerHTML = "中华鳖"; 
                     document.getElementById("table.img").src = "./img/mbj.png"; 
-                    document.getElementById("table.father").innerHTML
-                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
-                    document.getElementById("table.mother").innerHTML = "4.1×10<sup>650</sup>"; 
+                    if (openArea == "All")
+                    {
+                        document.getElementById("table.father").innerHTML
+                        = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
+                        document.getElementById("table.mother").innerHTML = "4.1×10<sup>650</sup>"; 
+                    }
+                    else
+                    {
+                        document.getElementById("table.father").innerHTML
+                        = "<i>您没有权限</i>"; 
+                        document.getElementById("table.mother").innerHTML = "<i>您没有权限</i>"; 
+                    }
                     document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
@@ -216,9 +225,13 @@
                     document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
-                    document.getElementById("table.children").innerHTML
-                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>、"
-                    + "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    if (openArea == "All")
+                    {
+                        document.getElementById("table.children").innerHTML
+                        = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>、"
+                        + "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    }
+                    else document.getElementById("table.children").innerHTML = "<i>您没有权限</i>"
                     document.getElementById("table.skill").innerHTML = "所有"; 
                     return "Completed!"; 
                 }
