@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>简历</title>
+        <style>
+            .greenname {
+                background: #82ca13;
+                color: green;
+                border: 1px solid green;
+                border-radius: 0.1em;
+            }
+            .yellowname {
+                background: #82ca13;
+                color: #f9cf82;
+                border: 1px solid green;
+                border-radius: 0.1em;
+            }
+            .highlight {
+                color: red;
+            }
+        </style>
+        <script>
+            function new_web(webUrl)
+            {
+                window.open(webUrl); 
+            }
+            function open_web(webUrl)
+            {
+                location = webUrl; 
+            }
+            var chkName = ""; 
+            var greenName = ["曾楚笑", "范语涵", "钱锦鸿", "孙博为", "王聿煊", "姚宗昊", "张田泽宇", "赵承铭"]; 
+            var openArea = localStorage.getItem("school.resume.subject"); 
+            window.onload = function () {
+                openArea = localStorage.getItem("school.resume.subject"); 
+                if (localStorage.getItem("school.resume.logged") == null || openArea != "All") open_web("../login/"); 
+                localStorage.removeItem("school.resume.logged"); 
+                let name = localStorage.getItem("school.resume.party"); 
+                if (changeParty(name) == "Party not found. ") open_web("../login/"); 
+            }
+            function changeParty(name)
+            {
+                let lstName = chkName; 
+                chkName = name; 
+                document.getElementById("head.name").innerHTML = name; 
+                if (name == "王八党" && (openArea == "All"))
+                {
+                    document.getElementById("table.law").innerHTML = "<a style=\"color: white\">暂时不可见</a>"; 
+                    document.getElementById("table.leader").innerHTML = "<b>陈怿白</b>"; 
+                    document.getElementById("table.member").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈怿白</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">王聿煊</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">马伯驹</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚云雷</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">熊若渔</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">范语涵</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">孙博为</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">曾楚笑</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">姚宗昊</b>"; 
+                    return "Completed!"; 
+                }
+                name = lstName; 
+                chkName = lstName; 
+                document.getElementById("head.name").innerHTML = name; 
+                return "Party not found. "; 
+            }
+            function openName(name)
+            {
+                localStorage.setItem("school.resume.name", name); 
+                localStorage.setItem("school.resume.logged", "logged"); 
+                open_web(".."); 
+            }
+        </script>
+    </head>
+    <body>
+        <h1><b id="head.name"></b></h1>
+        <table cellspacing="0" border="1">
+            <tbody>
+                <tr><td>领导者</td><td id="table.leader"></td></tr>
+                <tr><td>成员</td><td id="table.member"></td></tr>
+                <tr><td>条例</td><td id="table.law"></td></tr>
+            </tbody>
+        </table>
+    </body>
+</html>

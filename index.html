@@ -59,10 +59,12 @@
                     document.getElementById("table.name").onclick = greening; 
                     document.getElementById("changeGreen").style.display = "inline"; 
                     document.getElementById("table.sex").innerHTML = "暂无"; 
-                    document.getElementById("table.nation").innerHTML = "非生物（含少量鳖血脉）"; 
+                    document.getElementById("table.nation").innerHTML = "非生物（含少量鳖、猪、ALG血脉）"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML
                     = "灯笼鳖、<b class=\"highlight\">身残志坚</b>、<b class=\"highlight\">独臂大侠</b>、"
-                    + "<b class=\"highlight\">倚老卖老</b>"; 
+                    + "<b class=\"highlight\">倚老卖老</b>、<b class=\"highlight\">王大智障</b>"; 
                     document.getElementById("table.img").src = "./img/wyx.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
@@ -87,6 +89,8 @@
                     document.getElementById("changeGreen").style.display = "inline"; 
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "沙雕"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "莎迪奥"; 
                     document.getElementById("table.img").src = "./img/yzh.png"; 
                     document.getElementById("table.father").innerHTML = "莎士比亚"; 
@@ -111,6 +115,8 @@
                     document.getElementById("changeGreen").style.display = "inline"; 
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "鳖"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "胖头鳖、杰尼杰尼"; 
                     document.getElementById("table.img").src = "./img/kyl.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
@@ -122,8 +128,7 @@
                     document.getElementById("table.defeat").innerHTML = "养父"; 
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
-                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>、"
-                    + "<b onclick=\"changeName('曾楚笑')\" style=\"cursor: pointer\">曾楚笑</b>"; 
+                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     return "Completed!"; 
                 }
@@ -138,6 +143,8 @@
                     document.getElementById("changeGreen").style.display = "inline"; 
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "鸟"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "SUBWAY、小博为、大鸟"; 
                     document.getElementById("table.img").src = "./img/sbw.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
@@ -161,18 +168,96 @@
                     document.getElementById("table.name").onclick = greening; 
                     document.getElementById("changeGreen").style.display = "inline"; 
                     document.getElementById("table.sex").innerHTML = "男女"; 
-                    document.getElementById("table.nation").innerHTML = "不明"; 
+                    document.getElementById("table.nation").innerHTML = "法兰西"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "玛卡巴卡、巴黎超模"; 
                     document.getElementById("table.img").src = "./img/zcx.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML
-                    = "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "不明"; 
                     document.getElementById("table.children").innerHTML = "无"; 
-                    document.getElementById("table.skill").innerHTML = "不明"; 
+                    document.getElementById("table.skill").innerHTML = "亲友团"; 
+                    return "Completed!"; 
+                }
+                if (name == "安佳祚" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.remove("yellowname"); 
+                    document.getElementById("head.name").onclick = function(){}; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "none"; 
+                    document.getElementById("head.name.green").onclick = function(){}; 
+                    document.getElementById("table.name").classList.remove("greenname"); 
+                    document.getElementById("table.name").onclick = function(){}; 
+                    document.getElementById("changeGreen").style.display = "none"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "汉"; 
+                    document.getElementById("table.nickname").innerHTML = "无"; 
+                    document.getElementById("table.img").src = ""; 
+                    document.getElementById("table.party").innerHTML = "无"; 
+                    document.getElementById("table.father").innerHTML
+                    = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").innerHTML = "无"; 
+                    document.getElementById("table.wife").innerHTML
+                    = "阿这……详情咨询<b onclick=\"changeName('熊若渔')\" style=\"cursor: pointer\">熊若渔</b>"; 
+                    document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('熊若渔')\" style=\"cursor: pointer\">熊若渔</b>"
+                    document.getElementById("table.skill").innerHTML = "未知"; 
+                    return "Completed!"; 
+                }
+                if (name == "熊若渔" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.remove("yellowname"); 
+                    document.getElementById("head.name").onclick = function(){}; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "none"; 
+                    document.getElementById("head.name.green").onclick = function(){}; 
+                    document.getElementById("table.name").classList.remove("greenname"); 
+                    document.getElementById("table.name").onclick = function(){}; 
+                    document.getElementById("changeGreen").style.display = "none"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "汉"; 
+                    document.getElementById("table.nickname").innerHTML = "无"; 
+                    document.getElementById("table.img").src = "./img/xry.png"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
+                    document.getElementById("table.father").innerHTML
+                    = "<b onclick=\"changeName('安佳祚')\" style=\"cursor: pointer\">安佳祚</b>"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").innerHTML = "无"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"\\*changeName('徐心怡')*\\ \" style=\"cursor: pointer\">徐心怡</b>"
+                    document.getElementById("table.skill").innerHTML = "未知"; 
+                    return "Completed!"; 
+                }
+                if (name == "陈怿白" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.remove("yellowname"); 
+                    document.getElementById("head.name").onclick = function(){}; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "none"; 
+                    document.getElementById("head.name.green").onclick = function(){}; 
+                    document.getElementById("table.name").classList.remove("greenname"); 
+                    document.getElementById("table.name").onclick = function(){}; 
+                    document.getElementById("changeGreen").style.display = "none"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "神、鳖"; 
+                    document.getElementById("table.nickname").innerHTML = "青鳖"; 
+                    document.getElementById("table.img").src = "./img/cyb.png"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
+                    document.getElementById("table.father").innerHTML = "<i>您没有权限</i>"; 
+                    document.getElementById("table.mother").innerHTML = "<i>您没有权限</i>"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "none"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "未知"; 
                     return "Completed!"; 
                 }
                 if (name == "马伯驹" && (openArea == "Ybj" || openArea == "All"))
@@ -190,6 +275,8 @@
                     document.getElementById("table.img").src = "./img/mbj.png"; 
                     if (openArea == "All")
                     {
+                        document.getElementById("table.party").innerHTML
+                        = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                         document.getElementById("table.father").innerHTML
                         = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
                         document.getElementById("table.mother").innerHTML = "4.1×10<sup>650</sup>"; 
@@ -199,6 +286,7 @@
                         document.getElementById("table.father").innerHTML
                         = "<i>您没有权限</i>"; 
                         document.getElementById("table.mother").innerHTML = "<i>您没有权限</i>"; 
+                        document.getElementById("table.party").parentElement.style.display = "none"; 
                     }
                     document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
@@ -227,11 +315,19 @@
                     document.getElementById("table.defeat").innerHTML = "无"; 
                     if (openArea == "All")
                     {
+                        document.getElementById("table.party").innerHTML
+                        = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                         document.getElementById("table.children").innerHTML
                         = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>、"
-                        + "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                        + "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>、"
+                        + "<b onclick=\"changeName('安佳祚')\" style=\"cursor: pointer\">安佳祚</b>、"
+                        + "<b onclick=\"changeName('曾楚笑')\" style=\"cursor: pointer\">曾楚笑</b>"; 
                     }
-                    else document.getElementById("table.children").innerHTML = "<i>您没有权限</i>"
+                    else
+                    {
+                        document.getElementById("table.children").innerHTML = "<i>您没有权限</i>"; 
+                        document.getElementById("table.party").parentElement.style.display = "none"; 
+                    }
                     document.getElementById("table.skill").innerHTML = "所有"; 
                     return "Completed!"; 
                 }
@@ -242,6 +338,12 @@
                 document.getElementById("table.name").innerHTML = name; 
                 document.getElementById("table.img").src = lstImage; 
                 return "Resume not found. "; 
+            }
+            function openParty(name)
+            {
+                localStorage.setItem("school.resume.party", name); 
+                localStorage.setItem("school.resume.logged", "logged"); 
+                open_web("party"); 
             }
             function greening()
             {
@@ -270,6 +372,7 @@
                 <tr><td>姓名</td><td><b id="table.name"></b></td></tr>
                 <tr><td>性别</td><td id="table.sex"></td></tr>
                 <tr><td>民族</td><td id="table.nation"></td></tr>
+                <tr><td>党派</td><td id="table.party"></td></tr>
                 <tr><td>别名</td><td id="table.nickname"></td></tr>
                 <tr><td>照片</td><td><b><img id="table.img" style="height: 10em;"></b></td></tr>
                 <tr><td>父亲</td><td id="table.father"></td></tr>
