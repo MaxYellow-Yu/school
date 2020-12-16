@@ -48,18 +48,28 @@
                 if (name == "王八党" && (openArea == "All"))
                 {
                     document.getElementById("table.law").innerHTML = "<a style=\"color: white\">暂时不可见</a>"; 
-                    document.getElementById("table.leader").innerHTML = "<b>陈怿白</b>"; 
+                    document.getElementById("table.leader").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈怿白</b>"; 
                     document.getElementById("table.member").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈怿白</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">王聿煊</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">马伯驹</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚云雷</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚皮球</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">熊若渔</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">范语涵</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">孙博为</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">曾楚笑</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">姚宗昊</b>"; 
+                    document.getElementById("table.army").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">马伯驹</b>"; 
+                    document.getElementById("table.creater").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">马伯驹</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">王聿煊</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚皮球</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚云雷</b>"; 
                     return "Completed!"; 
                 }
                 name = lstName; 
@@ -80,8 +90,10 @@
         <table cellspacing="0" border="1">
             <tbody>
                 <tr><td>领导者</td><td id="table.leader"></td></tr>
+                <tr><td>总司令</td><td id="table.army"></td></tr>
                 <tr><td>成员</td><td id="table.member"></td></tr>
                 <tr><td>条例</td><td id="table.law"></td></tr>
+                <tr><td>创始人</td><td id="table.creater"></td></tr>
             </tbody>
         </table>
     </body>

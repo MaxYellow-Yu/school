@@ -71,11 +71,16 @@
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML
                     = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
-                    document.getElementById("table.wife").innerHTML = "<b class=\"highlight\">4.1×10<sup>650</sup></b>"; 
+                    document.getElementById("table.wife").innerHTML = "w(22)=<b class=\"highlight\">0</b>"; 
                     document.getElementById("table.defeat").innerHTML = "一龙指、弯尺神功"; 
                     document.getElementById("table.children").innerHTML
-                    = "<b onclick=\"changeName('马伯驹')\" style=\"cursor: pointer\">马伯驹</b>"; 
+                    = "<b onclick=\"changeName('马伯驹')\" style=\"cursor: pointer\">马伯驹</b>、"
+                    + "<b onclick=\"changeName('阚皮球')\" style=\"cursor: pointer\">阚皮球</b>"; 
                     document.getElementById("table.skill").innerHTML = "狂暴"; 
+                    document.getElementById("table.crime").innerHTML
+                    = "<li>（2019/9/1后：重婚罪）搜罗宇宙各地??共超过4.1×10<sup>6000</sup>名。</li>"
+                    + "<li>（2020/12/16 8:57 p.m.：??罪、故意杀人罪） ??了他的4.1×10<sup>670</sup>个妻子，"
+                    + "10分钟后??了4.1×10<sup>6000</sup>名女性。</li>"; 
                     return "Completed!"; 
                 }
                 else if (name == "姚宗昊" && (openArea == "All"))
@@ -102,9 +107,39 @@
                     document.getElementById("table.defeat").innerHTML = "釜底抽薪"; 
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "扯淡、开车"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     return "Completed!"; 
                 }
                 if (name == "阚云雷" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "半神"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
+                    document.getElementById("table.nickname").innerHTML = "无"; 
+                    document.getElementById("table.img").src = "./img/kyl.png"; 
+                    document.getElementById("table.father").innerHTML = "无"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
+                    document.getElementById("table.ad-father").innerHTML
+                    = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "养父"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
+                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
+                    document.getElementById("table.skill").innerHTML = "体锻"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
+                    return "Completed!"; 
+                }
+                if (name == "阚皮球" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -118,18 +153,18 @@
                     document.getElementById("table.party").innerHTML
                     = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "胖头鳖、杰尼杰尼"; 
-                    document.getElementById("table.img").src = "./img/kyl.png"; 
+                    document.getElementById("table.img").src = "./img/kpq.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML
-                    = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
+                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
-                    document.getElementById("table.defeat").innerHTML = "养父"; 
+                    document.getElementById("table.defeat").innerHTML = "养祖父"; 
                     document.getElementById("table.children").innerHTML
-                    = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
-                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
+                    = "无"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     return "Completed!"; 
                 }
                 if (name == "孙博为" && (openArea == "All"))
@@ -156,6 +191,7 @@
                     document.getElementById("table.defeat").innerHTML = "爷爷以及养父"; 
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "挨打"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     return "Completed!"; 
                 }
                 if (name == "曾楚笑" && (openArea == "All"))
@@ -182,32 +218,7 @@
                     document.getElementById("table.defeat").innerHTML = "不明"; 
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "亲友团"; 
-                    return "Completed!"; 
-                }
-                if (name == "安佳祚" && (openArea == "All"))
-                {
-                    document.getElementById("head.name").classList.remove("yellowname"); 
-                    document.getElementById("head.name").onclick = function(){}; 
-                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "none"; 
-                    document.getElementById("head.name.green").onclick = function(){}; 
-                    document.getElementById("table.name").classList.remove("greenname"); 
-                    document.getElementById("table.name").onclick = function(){}; 
-                    document.getElementById("changeGreen").style.display = "none"; 
-                    document.getElementById("table.sex").innerHTML = "男"; 
-                    document.getElementById("table.nation").innerHTML = "汉"; 
-                    document.getElementById("table.nickname").innerHTML = "无"; 
-                    document.getElementById("table.img").src = ""; 
-                    document.getElementById("table.party").innerHTML = "无"; 
-                    document.getElementById("table.father").innerHTML
-                    = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
-                    document.getElementById("table.mother").innerHTML = "无"; 
-                    document.getElementById("table.ad-father").innerHTML = "无"; 
-                    document.getElementById("table.wife").innerHTML
-                    = "阿这……详情咨询<b onclick=\"changeName('熊若渔')\" style=\"cursor: pointer\">熊若渔</b>"; 
-                    document.getElementById("table.defeat").innerHTML = "无"; 
-                    document.getElementById("table.children").innerHTML
-                    = "<b onclick=\"changeName('熊若渔')\" style=\"cursor: pointer\">熊若渔</b>"
-                    document.getElementById("table.skill").innerHTML = "未知"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     return "Completed!"; 
                 }
                 if (name == "熊若渔" && (openArea == "All"))
@@ -226,7 +237,7 @@
                     document.getElementById("table.party").innerHTML
                     = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.father").innerHTML
-                    = "<b onclick=\"changeName('安佳祚')\" style=\"cursor: pointer\">安佳祚</b>"; 
+                    = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">安佳祚</b>"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
                     document.getElementById("table.ad-father").innerHTML = "无"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
@@ -234,6 +245,7 @@
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"\\*changeName('徐心怡')*\\ \" style=\"cursor: pointer\">徐心怡</b>"
                     document.getElementById("table.skill").innerHTML = "未知"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     return "Completed!"; 
                 }
                 if (name == "陈怿白" && (openArea == "All"))
@@ -258,6 +270,7 @@
                     document.getElementById("table.defeat").innerHTML = "无"; 
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "未知"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     return "Completed!"; 
                 }
                 if (name == "马伯驹" && (openArea == "Ybj" || openArea == "All"))
@@ -273,6 +286,7 @@
                     document.getElementById("table.nation").innerHTML = "鳖"; 
                     document.getElementById("table.nickname").innerHTML = "中华鳖"; 
                     document.getElementById("table.img").src = "./img/mbj.png"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     if (openArea == "All")
                     {
                         document.getElementById("table.party").innerHTML
@@ -313,6 +327,7 @@
                     document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
                     if (openArea == "All")
                     {
                         document.getElementById("table.party").innerHTML
@@ -320,7 +335,7 @@
                         document.getElementById("table.children").innerHTML
                         = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>、"
                         + "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>、"
-                        + "<b onclick=\"changeName('安佳祚')\" style=\"cursor: pointer\">安佳祚</b>、"
+                        + "<b onclick=\"changeName('熊若渔')\" style=\"cursor: pointer\">安佳祚</b>、"
                         + "<b onclick=\"changeName('曾楚笑')\" style=\"cursor: pointer\">曾楚笑</b>"; 
                     }
                     else
@@ -382,6 +397,7 @@
                 <tr><td>克星</td><td id="table.defeat"></td></tr>
                 <tr><td>子女</td><td id="table.children"></td></tr>
                 <tr><td>技能</td><td id="table.skill"></td></tr>
+                <tr><td>犯罪前科</td><td id="table.crime" style="font-size: xx-small;"></td></tr>
             </tbody>
         </table>
     </body>
