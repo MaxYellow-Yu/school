@@ -21,6 +21,31 @@
                 color: red;
             }
         </style>
+        <script type="text/template" id="wyx-knowledge">
+            <style>
+                .word {
+                    color: blue; 
+                }
+            </style>
+            <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
+            <b class="word" style="font-size: 15px">jason</b><br>
+            <b>noun</b><br>
+            1. shit. 狗屎。&ensp;<b class="word">a piece of jason</b>&ensp;一坨狗屎&emsp; 
+            2. idiot, fool, fucker. 笨蛋，傻瓜。Three Jasons<i>&ensp;is a good film in India. </i>《三傻》在印度是一部好电影。
+            <br>
+            <b>verb</b><br>
+            fuck. 艹。
+            <br>
+            <b>excl.</b><br>
+            1. fuck. 他妈的。(=<b class="word">jack</b>)&emsp;
+            2. shit. 狗屎。(=<b class="word">jit</b>)
+            <br>
+            <b>number</b><br>
+            1. jason constant. 杰森常数（=4.1×10<sup>670</sup>）。
+            <b class="word">a jason of wives</b>&ensp; 一杰森妻子，4.1×10<sup>670</sup>位妻子&emsp;
+            2. the number of w(22). w(22)函数的值。
+            3. a lot, not a little. 很多很多。 <i>a jason of jason</i>&ensp;很多狗屎
+        </script>
         <script>
             function new_web(webUrl)
             {
@@ -40,11 +65,25 @@
                 let name = localStorage.getItem("school.resume.name"); 
                 if (changeName(name) == "Resume not found. ") open_web("./login/"); 
             }
+            function w(number)
+            {
+                if (number == 22) return 0; 
+                return 0; 
+            }
+            function knowledge()
+            {
+                if (document.getElementById("knowledge").style.display == "none")
+                document.getElementById("knowledge").style.display = "inline"; 
+                else document.getElementById("knowledge").style.display = "none"; 
+                if (chkName == "王聿煊") document.getElementById("knowledge").innerHTML
+                = document.getElementById("wyx-knowledge").textContent; 
+            }
             function changeName(name)
             {
                 let lstName = chkName; 
                 let lstImage = document.getElementById("table.img").src; 
                 chkName = name; 
+                document.getElementById("knowledge").style.display = "none"; 
                 document.getElementById("head.name").innerHTML = name; 
                 document.getElementById("head.name.green").innerHTML = name; 
                 document.getElementById("table.name").innerHTML = name; 
@@ -64,26 +103,30 @@
                     = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML
                     = "灯笼鳖、<b class=\"highlight\">身残志坚</b>、<b class=\"highlight\">独臂大侠</b>、"
-                    + "<b class=\"highlight\">倚老卖老</b>、<b class=\"highlight\">王大智障</b>"; 
+                    + "<b class=\"highlight\">倚老卖老</b>、<b class=\"highlight\">王大智障</b>、"
+                    + "<b class=\"highlight\">王锁骨</b>、<b class=\"highlight\">王大CC</b>"; 
                     document.getElementById("table.img").src = "./img/wyx.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML
                     = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">俞伯驹</b>"; 
-                    document.getElementById("table.wife").innerHTML = "w(22)=<b class=\"highlight\">0</b>"; 
-                    document.getElementById("table.defeat").innerHTML = "一龙指、弯尺神功"; 
+                    document.getElementById("table.wife").innerHTML = "w(22)=<b class=\"highlight\">" + w(22) + "</b>"; 
+                    document.getElementById("table.defeat").innerHTML = "一龙指、弯尺神功、CLAVICLES"; 
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"changeName('马伯驹')\" style=\"cursor: pointer\">马伯驹</b>、"
-                    + "<b onclick=\"changeName('阚皮球')\" style=\"cursor: pointer\">阚皮球</b>"; 
+                    + "<b onclick=\"changeName('阚皮球')\" style=\"cursor: pointer\">阚皮球</b>、"
+                    + "<b onclick=\"changeName('范语涵')\" style=\"cursor: pointer\">范语涵</b>"; 
                     document.getElementById("table.skill").innerHTML = "狂暴"; 
                     document.getElementById("table.crime").innerHTML
                     = "<li>（2019/9/1后：重婚罪）搜罗宇宙各地??共超过4.1×10<sup>6000</sup>名。</li>"
                     + "<li>（2020/12/16 8:57 p.m.：??罪、故意杀人罪） ??了他的4.1×10<sup>670</sup>个妻子，"
                     + "10分钟后??了4.1×10<sup>6000</sup>名女性。</li>"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-red.png')"; 
+                    document.getElementById("crystal-ball").onclick = knowledge; 
                     return "Completed!"; 
                 }
-                else if (name == "姚宗昊" && (openArea == "All"))
+                if (name == "姚宗昊" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -108,6 +151,8 @@
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "扯淡、开车"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "阚云雷" && (openArea == "All"))
@@ -137,6 +182,8 @@
                     + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "阚皮球" && (openArea == "All"))
@@ -154,17 +201,18 @@
                     = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "胖头鳖、杰尼杰尼"; 
                     document.getElementById("table.img").src = "./img/kpq.png"; 
-                    document.getElementById("table.father").innerHTML = "无"; 
-                    document.getElementById("table.mother").innerHTML = "无"; 
-                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
-                    document.getElementById("table.ad-father").innerHTML
+                    document.getElementById("table.father").innerHTML
                     = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
+                    document.getElementById("table.mother").innerHTML = "w(22)=<b class=\"highlight\">" + w(22) + "</b>"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "none"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "养祖父"; 
                     document.getElementById("table.children").innerHTML
                     = "无"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "孙博为" && (openArea == "All"))
@@ -192,6 +240,8 @@
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "挨打"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "曾楚笑" && (openArea == "All"))
@@ -219,6 +269,8 @@
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "亲友团"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "熊若渔" && (openArea == "All"))
@@ -246,6 +298,36 @@
                     = "<b onclick=\"\\*changeName('徐心怡')*\\ \" style=\"cursor: pointer\">徐心怡</b>"
                     document.getElementById("table.skill").innerHTML = "未知"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    return "Completed!"; 
+                }
+                if (name == "范语涵" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "汉"; 
+                    document.getElementById("table.nickname").innerHTML = "饭桶、FT、ST"; 
+                    document.getElementById("table.img").src = "./img/fyh.png"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
+                    document.getElementById("table.mother").innerHTML
+                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
+                    document.getElementById("table.father").innerHTML = "h(22)=<b class=\"highlight\">0</b>"; 
+                    document.getElementById("table.ad-father").innerHTML = "无"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "无"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "未知"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "陈怿白" && (openArea == "All"))
@@ -271,6 +353,8 @@
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "未知"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "马伯驹" && (openArea == "Ybj" || openArea == "All"))
@@ -293,7 +377,8 @@
                         = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                         document.getElementById("table.father").innerHTML
                         = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
-                        document.getElementById("table.mother").innerHTML = "4.1×10<sup>650</sup>"; 
+                        document.getElementById("table.mother").innerHTML
+                        = "w(22)=<b class=\"highlight\">" + w(22) + "</b>"; 
                     }
                     else
                     {
@@ -307,6 +392,8 @@
                     document.getElementById("table.defeat").innerHTML = "无"; 
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
                 if (name == "俞伯驹" && (openArea == "Ybj" || openArea == "All"))
@@ -328,6 +415,8 @@
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
                     if (openArea == "All")
                     {
                         document.getElementById("table.party").innerHTML
@@ -381,6 +470,13 @@
         <div style="position: fixed; right: 1em; bottom: 1em;" id="changeGreen">
             <button onclick="greenHeight += 0.1; changeGreen()">-</button>
             <button onclick="greenHeight -= 0.1; changeGreen()">+</button>
+        </div>
+        <div style="width: 1px; height: 100px; background: rgb(185, 185, 185); position: fixed; right: 100px; top: 0px;"></div>
+        <div id="crystal-ball" style="width: 80px; height: 80px; border-radius: 50%;
+        position: fixed; right: 60px; top: 98px; background: url('img/crystal-ball-blue.png'); overflow: hidden;"></div>
+        <div id="knowledge" style="width: 300px; height: 400px; display: none;
+        border: 1px solid rgb(185, 185, 185); font-size: 10px; padding-left: 10px; padding-top: 10px;
+        box-shadow: -2px 2px 5px #dbdbdb; position: fixed; top: 180px; right: 10px; overflow: scroll;">
         </div>
         <table cellspacing="0" border="1">
             <tbody>
