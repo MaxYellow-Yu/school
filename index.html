@@ -20,7 +20,28 @@
             .highlight {
                 color: red;
             }
+/* 
+            @keyframes rotateGreen {
+                from {
+                    transform-origin: 50% 50%;
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform-origin: 50% 50%;
+                    transform: rotate(120deg);
+                }
+            } */
         </style>
+        <script src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                }
+            });
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub]); 
+        </script>
         <script type="text/template" id="wyx-knowledge">
             <style>
                 .word {
@@ -45,6 +66,15 @@
             <b class="word">a jason of wives</b>&ensp; 一杰森妻子，4.1×10<sup>670</sup>位妻子&emsp;
             2. the number of w(22). w(22)函数的值。
             3. a lot, not a little. 很多很多。 <i>a jason of jason</i>&ensp;很多狗屎
+            <b style="font-size: 20px">Super Advanced Mathematics 超等数学</b><br>
+            <b style="font-size: 15px">1.1&ensp;$w(22)$的性质</b><br>
+            $$\Sigma w(22)=+\infty$$
+            <b style="font-size: 15px">1.2&ensp;杰森与杰森常数（$\text{Ja}$）</b><br>
+            <b style="font-size: 12px">1.2.1&ensp;杰森常数</b><br>
+            $$\text{Json} =4.1\times 10^{670}$$
+            <b style="font-size: 12px">1.2.1&ensp;一些常用单位</b><br>
+            $$1\text{Ja} =4.1\times 10^{670}$$
+            $$1\text{GJa} =2^{30}\text{Ja}$$
         </script>
         <script>
             function new_web(webUrl)
@@ -55,9 +85,16 @@
             {
                 location = webUrl; 
             }
+            function mathjax_dy(elementId) {
+                if (!window.MathJax) {
+                    return;
+                }
+                window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub, document.getElementById(elementId)]);
+            }
             var chkName = ""; 
             var greenName = ["曾楚笑", "范语涵", "钱锦鸿", "孙博为", "王聿煊", "姚宗昊", "张田泽宇", "赵承铭"]; 
             var openArea = localStorage.getItem("school.resume.subject"); 
+            var intervalNum = -1; 
             window.onload = function () {
                 if (localStorage.getItem("school.resume.logged") == null) open_web("./login/"); 
                 localStorage.removeItem("school.resume.logged"); 
@@ -77,9 +114,11 @@
                 else document.getElementById("knowledge").style.display = "none"; 
                 if (chkName == "王聿煊") document.getElementById("knowledge").innerHTML
                 = document.getElementById("wyx-knowledge").textContent; 
+                mathjax_dy("knowledge"); 
             }
             function changeName(name)
             {
+                clearInterval(intervalNum); 
                 let lstName = chkName; 
                 let lstImage = document.getElementById("table.img").src; 
                 chkName = name; 
@@ -88,6 +127,10 @@
                 document.getElementById("head.name.green").innerHTML = name; 
                 document.getElementById("table.name").innerHTML = name; 
                 document.getElementById("table.img").src = "./img/" + name + ".png"; 
+                document.getElementById("changeGreenSpeed").style.display = "none"; 
+                document.getElementById("changeGreen").children[1].innerHTML = "-"; 
+                document.getElementById("changeGreen").children[2].innerHTML = "+"; 
+                document.getElementById("changeGreen").children[2].style.transform = "rotate(0deg)"; 
                 if (name == "王聿煊" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
@@ -97,6 +140,11 @@
                     document.getElementById("table.name").classList.add("greenname"); 
                     document.getElementById("table.name").onclick = greening; 
                     document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("changeGreen").children[1].innerHTML = "FUCK"; 
+                    document.getElementById("changeGreen").children[2].innerHTML = "FUCK"; 
+                    document.getElementById("changeGreen").children[2].style.transform = "rotate(180deg)"; 
+                    document.getElementById("changeGreenSpeed").style.display = "inline"; 
+                    intervalNum = setInterval("changeGreenAuto()", 60 / greenSpeed); 
                     document.getElementById("table.sex").innerHTML = "暂无"; 
                     document.getElementById("table.nation").innerHTML = "非生物（含少量鳖、猪、ALG血脉）"; 
                     document.getElementById("table.party").innerHTML
@@ -116,7 +164,8 @@
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"changeName('马伯驹')\" style=\"cursor: pointer\">马伯驹</b>、"
                     + "<b onclick=\"changeName('阚皮球')\" style=\"cursor: pointer\">阚皮球</b>、"
-                    + "<b onclick=\"changeName('范语涵')\" style=\"cursor: pointer\">范语涵</b>"; 
+                    + "<b onclick=\"changeName('范语涵')\" style=\"cursor: pointer\">范语涵</b>、"
+                    + "<b onclick=\"changeName('华奕开')\" style=\"cursor: pointer\">华奕开</b>"; 
                     document.getElementById("table.skill").innerHTML = "狂暴"; 
                     document.getElementById("table.crime").innerHTML
                     = "<li>（2019/9/1后：重婚罪）搜罗宇宙各地??共超过4.1×10<sup>6000</sup>名。</li>"
@@ -204,12 +253,71 @@
                     document.getElementById("table.father").innerHTML
                     = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
                     document.getElementById("table.mother").innerHTML = "w(22)=<b class=\"highlight\">" + w(22) + "</b>"; 
-                    document.getElementById("table.ad-father").parentElement.style.display = "none"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
+                    document.getElementById("table.ad-father").innerHTML
+                    = "<b onclick=\"changeName('钱锦鸿')\" style=\"cursor: pointer\">钱锦鸿</b>"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "养祖父"; 
                     document.getElementById("table.children").innerHTML
                     = "无"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    return "Completed!"; 
+                }
+                if (name == "钱锦鸿" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "汉"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
+                    document.getElementById("table.nickname").innerHTML = "坤坤"; 
+                    document.getElementById("table.img").src = "./img/mrnobody.png"; 
+                    document.getElementById("table.father").innerHTML = "无"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "none"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "未知"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('阚皮球')\" style=\"cursor: pointer\">阚皮球</b>"; 
+                    document.getElementById("table.skill").innerHTML = "唱跳Rap篮球"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    return "Completed!"; 
+                }
+                if (name == "华奕开" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "猿"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
+                    document.getElementById("table.nickname").innerHTML = "遇安居士、开开"; 
+                    document.getElementById("table.img").src = "./img/hyk.png"; 
+                    document.getElementById("table.father").innerHTML = "h(22)=<b class=\"highlight\">0</b>"; 
+                    document.getElementById("table.mother").innerHTML
+                    = "<b onclick=\"changeName('王聿煊')\" style=\"cursor: pointer\">王聿煊</b>"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "none"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "哥哥、父亲"; 
+                    document.getElementById("table.children").innerHTML
+                    = "无"; 
+                    document.getElementById("table.skill").innerHTML = "炸母亲"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
                     document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
                     document.getElementById("crystal-ball").onclick = function(){}; 
@@ -291,6 +399,7 @@
                     document.getElementById("table.father").innerHTML
                     = "<b onclick=\"changeName('俞伯驹')\" style=\"cursor: pointer\">安佳祚</b>"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML = "无"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
@@ -304,13 +413,13 @@
                 }
                 if (name == "范语涵" && (openArea == "All"))
                 {
-                    document.getElementById("head.name").classList.add("yellowname"); 
-                    document.getElementById("head.name").onclick = greening; 
-                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
-                    document.getElementById("head.name.green").onclick = greening; 
-                    document.getElementById("table.name").classList.add("greenname"); 
-                    document.getElementById("table.name").onclick = greening; 
-                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("head.name").classList.remove("yellowname"); 
+                    document.getElementById("head.name").onclick = function(){}; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "none"; 
+                    document.getElementById("head.name.green").onclick = function(){}; 
+                    document.getElementById("table.name").classList.remove("greenname"); 
+                    document.getElementById("table.name").onclick = function(){}; 
+                    document.getElementById("changeGreen").style.display = "none"; 
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "汉"; 
                     document.getElementById("table.nickname").innerHTML = "饭桶、FT、ST"; 
@@ -324,7 +433,7 @@
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "无"; 
                     document.getElementById("table.children").innerHTML = "无"; 
-                    document.getElementById("table.skill").innerHTML = "未知"; 
+                    document.getElementById("table.skill").innerHTML = "炸母亲、FUCK大法阵"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
                     document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
                     document.getElementById("crystal-ball").onclick = function(){}; 
@@ -452,29 +561,47 @@
             function greening()
             {
                 let chsGrnName = greenName[Math.floor(Math.random() * greenName.length)]; 
-                alert(chkName + "被" + chsGrnName + "绿了！"); 
+                if (chkName == "王聿煊" && Math.floor(Math.random() * 100) <= 30) alert("FUCK you, JASON!"); 
+                else alert(chkName + "被" + chsGrnName + "绿了！"); 
             }
-            var greenHeight = 0.5; 
+            var greenHeight = 0.5, greenSpeed = 1, greenDir = 1;   
             function changeGreen()
             {
                 if (greenHeight > 1.2) greenHeight = 1.2; 
                 if (greenHeight < 0.2) greenHeight = 0.2; 
                 document.getElementById("head.name.green").parentElement.style.height = String(greenHeight) + "em"; 
             }
+            function changeGreenAuto()
+            {
+                if (greenHeight >= 1.2) greenDir = -1; 
+                if (greenHeight <= 0.2) greenDir = 1; 
+                greenHeight += greenDir * 0.01; 
+                changeGreen(); 
+            }
+            function changeSpeed(delta)
+            {
+                greenSpeed += delta; 
+                if (greenSpeed <= 1) greenSpeed = 1; 
+                if (greenSpeed >= 10) greenSpeed = 10; 
+                clearInterval(intervalNum); 
+                intervalNum = setInterval("changeGreenAuto()", 60 / greenSpeed); 
+            }
         </script>
     </head>
     <body>
         <h1><b id="head.name"></b>简历</h1>
-        <h1><div style="height: 0.5em; overflow: hidden; position: absolute; top: 0.7em;">
+        <h1><div style="height: 0.5em; overflow: hidden; position: absolute; top: 0.7em; ">
         <b class="greenname" id="head.name.green"></b></div></h1>
-        <div style="position: fixed; right: 1em; bottom: 1em;" id="changeGreen">
+        <div style="position: fixed; right: 1em; bottom: 1em;" id="changeGreen"><div id="changeGreenSpeed">
+            <button onclick="changeSpeed(-1)">JASON</button>
+            <button onclick="changeSpeed(1)" style="transform: rotate(180deg);">JASON</button></div>
             <button onclick="greenHeight += 0.1; changeGreen()">-</button>
             <button onclick="greenHeight -= 0.1; changeGreen()">+</button>
         </div>
         <div style="width: 1px; height: 100px; background: rgb(185, 185, 185); position: fixed; right: 100px; top: 0px;"></div>
         <div id="crystal-ball" style="width: 80px; height: 80px; border-radius: 50%;
         position: fixed; right: 60px; top: 98px; background: url('img/crystal-ball-blue.png'); overflow: hidden;"></div>
-        <div id="knowledge" style="width: 300px; height: 400px; display: none;
+        <div id="knowledge" style="width: 300px; height: 400px; display: none; background: white;
         border: 1px solid rgb(185, 185, 185); font-size: 10px; padding-left: 10px; padding-top: 10px;
         box-shadow: -2px 2px 5px #dbdbdb; position: fixed; top: 180px; right: 10px; overflow: scroll;">
         </div>
@@ -496,5 +623,7 @@
                 <tr><td>犯罪前科</td><td id="table.crime" style="font-size: xx-small;"></td></tr>
             </tbody>
         </table>
+        <script>
+        </script>
     </body>
 </html>
