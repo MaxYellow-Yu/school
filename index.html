@@ -65,7 +65,8 @@
             1. jason constant. 杰森常数（=4.1×10<sup>670</sup>）。
             <b class="word">a jason of wives</b>&ensp; 一杰森妻子，4.1×10<sup>670</sup>位妻子&emsp;
             2. the number of w(22). w(22)函数的值。
-            3. a lot, not a little. 很多很多。 <i>a jason of jason</i>&ensp;很多狗屎
+            3. a lot, not a little. 很多很多。 <i>a jason of jason</i>&ensp;很多狗屎<br>
+            <hr>
             <b style="font-size: 20px">Super Advanced Mathematics 超等数学</b><br>
             <b style="font-size: 15px">1.1&ensp;$w(22)$的性质</b><br>
             $$\Sigma w(22)=+\infty$$
@@ -75,6 +76,17 @@
             <b style="font-size: 12px">1.2.1&ensp;一些常用单位</b><br>
             $$1\text{Ja} =4.1\times 10^{670}$$
             $$1\text{GJa} =2^{30}\text{Ja}$$
+        </script>
+        <script type="text/template" id="lyf-knowledge">
+            <style>
+                .word {
+                    color: blue; 
+                }
+            </style>
+            <b style="font-size: 20px">On the Origin of Species II 物种起源（二）</b><br>
+            <b style="font-size: 15px">越南猴子</b><br>
+            <b>分类：</b>脊索动物门哺乳纲真兽亚纲灵长目类人猿亚目猴科猴属越南猴子种<br>
+            目前世界上的越南猴子仅剩一只，居于中国东南沿海地区。
         </script>
         <script>
             function new_web(webUrl)
@@ -114,6 +126,8 @@
                 else document.getElementById("knowledge").style.display = "none"; 
                 if (chkName == "王聿煊") document.getElementById("knowledge").innerHTML
                 = document.getElementById("wyx-knowledge").textContent; 
+                if (chkName == "吕一凡") document.getElementById("knowledge").innerHTML
+                = document.getElementById("lyf-knowledge").textContent; 
                 mathjax_dy("knowledge"); 
             }
             function changeName(name)
@@ -228,7 +242,8 @@
                     document.getElementById("table.defeat").innerHTML = "养父"; 
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
-                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>"; 
+                    + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>、"
+                    + "<b onclick=\"changeName('吕一凡')\" style=\"cursor: pointer\">吕一凡</b>"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
                     document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
@@ -352,6 +367,35 @@
                     document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
+                if (name == "吕一凡" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "猴"; 
+                    document.getElementById("table.party").innerHTML
+                    = "无"; 
+                    document.getElementById("table.nickname").innerHTML = "越南猴子、鸭嘴猴"; 
+                    document.getElementById("table.img").src = "./img/lyf.gif"; 
+                    document.getElementById("table.father").innerHTML = "无"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
+                    document.getElementById("table.ad-father").innerHTML
+                    = "<b onclick=\"changeName('阚云雷')\" style=\"cursor: pointer\">阚云雷</b>"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "养爷爷"; 
+                    document.getElementById("table.children").innerHTML = "无"; 
+                    document.getElementById("table.skill").innerHTML = "没脸没皮"; 
+                    document.getElementById("table.crime").innerHTML = "无"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-red.png')"; 
+                    document.getElementById("crystal-ball").onclick = knowledge; 
+                    return "Completed!"; 
+                }
                 if (name == "曾楚笑" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
@@ -450,7 +494,7 @@
                     document.getElementById("changeGreen").style.display = "none"; 
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "神、鳖"; 
-                    document.getElementById("table.nickname").innerHTML = "青鳖"; 
+                    document.getElementById("table.nickname").innerHTML = "清鳖"; 
                     document.getElementById("table.img").src = "./img/cyb.png"; 
                     document.getElementById("table.party").innerHTML
                     = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
