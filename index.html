@@ -49,7 +49,7 @@
                 }
             </style>
             <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
-            <b class="word" style="font-size: 15px">jason</b><br>
+            <b class="word" style="font-size: 15px">jason</b>&emsp; /ˈdʒeɪsən/<br>
             <b>noun</b><br>
             1. shit. 狗屎。&ensp;<b class="word">a piece of jason</b>&ensp;一坨狗屎&emsp; 
             2. idiot, fool, fucker. 笨蛋，傻瓜。Three Jasons<i>&ensp;is a good film in India. </i>《三傻》在印度是一部好电影。
@@ -70,12 +70,14 @@
             <b style="font-size: 20px">Super Advanced Mathematics 超等数学</b><br>
             <b style="font-size: 15px">1.1&ensp;$w(22)$的性质</b><br>
             $$\Sigma w(22)=+\infty$$
-            <b style="font-size: 15px">1.2&ensp;杰森与杰森常数（$\text{Ja}$）</b><br>
+            <b style="font-size: 15px">1.2&ensp;杰森与杰森常数（$\text{J}$）</b><br>
             <b style="font-size: 12px">1.2.1&ensp;杰森常数</b><br>
-            $$\text{Json} =4.1\times 10^{670}$$
+            $$\text{J} =4.1\times 10^{670}$$
             <b style="font-size: 12px">1.2.1&ensp;一些常用单位</b><br>
-            $$1\text{Ja} =4.1\times 10^{670}$$
-            $$1\text{GJa} =2^{30}\text{Ja}$$
+            $$1\text{J} =4.1\times 10^{670}$$
+            $$1\text{GJ} =2^{30}\text{J}$$
+            <b style="font-size: 15px">1.3&ensp;杰森数列</b><br>
+            $$J_1=J,J_i=J_{i-1}^{J_{i-1}}$$
         </script>
         <script type="text/template" id="lyf-knowledge">
             <style>
@@ -87,6 +89,36 @@
             <b style="font-size: 15px">越南猴子</b><br>
             <b>分类：</b>脊索动物门哺乳纲真兽亚纲灵长目类人猿亚目猴科猴属越南猴子种<br>
             目前世界上的越南猴子仅剩一只，居于中国东南沿海地区。
+        </script>
+        <script type="text/template" id="hyk-knowledge">
+            <style>
+                .word {
+                    color: blue; 
+                }
+            </style>
+            <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
+            <b class="word" style="font-size: 15px">ken</b>&emsp; /ken/<br>
+            <b>noun</b><br>
+            1. shit. 狗屎。&ensp;<b class="word">a piece of ken</b>&ensp;一坨狗屎&emsp; 
+            2. idiot, fool, fucker. 笨蛋，傻瓜。Three Kens<i>&ensp;is a good film in India. </i>《三傻》在印度是一部好电影。
+            <br>
+            <b>verb</b><br>
+            fuck. 艹。
+            <br>
+            <b>excl.</b><br>
+            1. fuck. 他妈的。&emsp;
+            2. shit. 狗屎。
+        </script>
+        <script type="text/template" id="kpq-knowledge">
+            <style>
+                .word {
+                    color: blue; 
+                }
+            </style>
+            <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
+            <b class="word" style="font-size: 15px">allen</b>&emsp; /ˈælən/<br>
+            <b>noun</b><br>
+            Ball. 皮球。
         </script>
         <script>
             function new_web(webUrl)
@@ -128,6 +160,10 @@
                 = document.getElementById("wyx-knowledge").textContent; 
                 if (chkName == "吕一凡") document.getElementById("knowledge").innerHTML
                 = document.getElementById("lyf-knowledge").textContent; 
+                if (chkName == "华奕开") document.getElementById("knowledge").innerHTML
+                = document.getElementById("hyk-knowledge").textContent; 
+                if (chkName == "阚皮球") document.getElementById("knowledge").innerHTML
+                = document.getElementById("kpq-knowledge").textContent; 
                 mathjax_dy("knowledge"); 
             }
             function changeName(name)
@@ -220,6 +256,35 @@
                     document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
+                if (name == "张田泽宇" && (openArea == "All"))
+                {
+                    document.getElementById("head.name").classList.add("yellowname"); 
+                    document.getElementById("head.name").onclick = greening; 
+                    document.getElementById("head.name.green").parentElement.parentElement.style.display = "inline"; 
+                    document.getElementById("head.name.green").onclick = greening; 
+                    document.getElementById("table.name").classList.add("greenname"); 
+                    document.getElementById("table.name").onclick = greening; 
+                    document.getElementById("changeGreen").style.display = "inline"; 
+                    document.getElementById("table.sex").innerHTML = "男"; 
+                    document.getElementById("table.nation").innerHTML = "王八"; 
+                    document.getElementById("table.party").innerHTML
+                    = "<b onclick=\"openParty('纳粹党')\" style=\"cursor: pointer\">纳粹党</b>"; 
+                    document.getElementById("table.nickname").innerHTML = "张田"; 
+                    document.getElementById("table.img").src = "./img/ztzy.png"; 
+                    document.getElementById("table.father").innerHTML = "无"; 
+                    document.getElementById("table.mother").innerHTML = "无"; 
+                    document.getElementById("table.ad-father").parentElement.style.display = "none"; 
+                    document.getElementById("table.wife").innerHTML = "无"; 
+                    document.getElementById("table.defeat").innerHTML = "PICK FRUIT"; 
+                    document.getElementById("table.children").innerHTML
+                    = "<b onclick=\"changeName('阚皮球')\" style=\"cursor: pointer\">阚皮球</b>"; 
+                    document.getElementById("table.skill").innerHTML = "体重压制、偷窥"; 
+                    document.getElementById("table.crime").innerHTML
+                    = "<li>（2020/9/1后：崇尚纳粹）崇尚纳粹</li>"; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
+                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    return "Completed!"; 
+                }
                 if (name == "阚云雷" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
@@ -245,7 +310,7 @@
                     document.getElementById("table.children").innerHTML
                     = "<b onclick=\"changeName('姚宗昊')\" style=\"cursor: pointer\">姚宗昊</b>、"
                     + "<b onclick=\"changeName('孙博为')\" style=\"cursor: pointer\">孙博为</b>、"
-                    + "<b onclick=\"changeName('邱鸿议')\" style=\"cursor: pointer\">邱鸿议</b>"; 
+                    + "<b onclick=\"changeName('邱泓议')\" style=\"cursor: pointer\">邱鸿议</b>"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
                     document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
@@ -272,15 +337,16 @@
                     document.getElementById("table.mother").innerHTML = "w(22)=<b class=\"highlight\">" + w(22) + "</b>"; 
                     document.getElementById("table.ad-father").parentElement.style.display = "table-row"; 
                     document.getElementById("table.ad-father").innerHTML
-                    = "<b onclick=\"changeName('钱锦鸿')\" style=\"cursor: pointer\">钱锦鸿</b>"; 
+                    = "<b onclick=\"changeName('钱锦鸿')\" style=\"cursor: pointer\">钱锦鸿</b>、"
+                    + "<b onclick=\"changeName('张田泽宇')\" style=\"cursor: pointer\">张田泽宇</b>"; 
                     document.getElementById("table.wife").innerHTML = "无"; 
                     document.getElementById("table.defeat").innerHTML = "养祖父"; 
                     document.getElementById("table.children").innerHTML
                     = "无"; 
                     document.getElementById("table.skill").innerHTML = "体锻"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
-                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
-                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-red.png')"; 
+                    document.getElementById("crystal-ball").onclick = knowledge; 
                     return "Completed!"; 
                 }
                 if (name == "钱锦鸿" && (openArea == "All"))
@@ -336,8 +402,8 @@
                     = "无"; 
                     document.getElementById("table.skill").innerHTML = "炸母亲"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
-                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
-                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-red.png')"; 
+                    document.getElementById("crystal-ball").onclick = knowledge; 
                     return "Completed!"; 
                 }
                 if (name == "孙博为" && (openArea == "All"))
@@ -369,7 +435,7 @@
                     document.getElementById("crystal-ball").onclick = function(){}; 
                     return "Completed!"; 
                 }
-                if (name == "邱鸿议" && (openArea == "All"))
+                if (name == "邱泓议" && (openArea == "All"))
                 {
                     document.getElementById("head.name").classList.add("yellowname"); 
                     document.getElementById("head.name").onclick = greening; 
@@ -382,7 +448,7 @@
                     document.getElementById("table.nation").innerHTML = "汉"; 
                     document.getElementById("table.party").innerHTML
                     = "无"; 
-                    document.getElementById("table.nickname").innerHTML = "邱邱"; 
+                    document.getElementById("table.nickname").innerHTML = "邱邱、Calleymarbri"; 
                     document.getElementById("table.img").src = "./img/qhy.png"; 
                     document.getElementById("table.father").innerHTML = "无"; 
                     document.getElementById("table.mother").innerHTML = "无"; 
@@ -439,7 +505,7 @@
                     document.getElementById("table.sex").innerHTML = "男"; 
                     document.getElementById("table.nation").innerHTML = "猴"; 
                     document.getElementById("table.party").innerHTML
-                    = "无"; 
+                    = "<b onclick=\"openParty('王八党')\" style=\"cursor: pointer\">王八党</b>"; 
                     document.getElementById("table.nickname").innerHTML = "越南猴子、鸭嘴猴"; 
                     document.getElementById("table.img").src = "./img/lyf.gif"; 
                     document.getElementById("table.father").innerHTML = "无"; 
