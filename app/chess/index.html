@@ -57,6 +57,20 @@
             .teamii {
                 background: blue;
             }
+
+            .box {
+                position: absolute;
+                z-index: 1000;
+                padding: 5px 0;
+                list-style: none;
+                font-size: 14px;
+                text-align: left;
+                background-color: #fff;
+                border: 1px solid rgba(0,0,0,0.15);
+                border-radius: 3px;
+                box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+                background-clip: padding-box;
+            }
 /* 
             @keyframes rotateGreen {
                 from {
@@ -103,13 +117,13 @@
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1]]; 
-            var name = [["ybj", "cyb"], ["wyx", "kyl"], ["lt", "qjh"], 
+            var nam = [["ybj", "cyb"], ["wyx", "kyl"], ["lt", "qjh"], 
             ["fyh", "sbw", "xry", "qhy", "yxd"], ["mbj", "kpq", "yzh", "hyk"], 
             ["zcx"], ["ztzy"], ["lyf"]]; 
+            var nameCN = [["俞伯驹", "陈怿白"], ["王聿煊", "阚云雷"], ["刘涛", "钱锦鸿"], 
+            ["范语涵", "孙博为", "熊若渔", "邱泓议", "郁肖栋"], ["马伯驹", "阚皮球", "姚宗昊", "华奕开"], 
+            ["曾楚笑"], ["张田泽宇"], ["吕一凡"]]; 
             window.onload = function() {
-                let name = [["ybj", "cyb"], ["wyx", "kyl"], ["lt", "qjh"], 
-                ["fyh", "sbw", "xry", "qhy", "yxd"], ["mbj", "kpq", "yzh", "hyk"], 
-                ["zcx"], ["ztzy"], ["lyf"]]; 
                 $("#board tr td").addClass("hide"); 
                 for (let i = 0; i < 8; i++)
                 {
@@ -117,10 +131,11 @@
                     yI = Math.floor(Math.random() * 999) % 8; 
                     while (board[xI][yI] != -1) xI = Math.floor(Math.random() * 1000) % 8,
                     yI = Math.floor(Math.random() * 999) % 8; 
-                    let nameINum = Math.floor(Math.random() * 999) % name[i].length; 
-                    let nameI = name[i][nameINum]; 
+                    let nameINum = Math.floor(Math.random() * 999) % nam[i].length; 
+                    let nameI = nam[i][nameINum]; 
                     document.body.innerHTML += "<div class=\"piece teami\" id=\"piece" + i
-                    + "\" style=\"" + pos(xI, yI) + "display: none;\">" + nameI + "</div>"; 
+                    + "\" style=\"" + pos(xI, yI) + "display: none;\" onclick=\"control(" + xI + ", " + yI
+                    + ")\">" + nameI + "</div>"; 
                     board[xI][yI] = [0, i, nameINum]; 
                 }
                 for (let i = 0; i < 8; i++)
@@ -129,10 +144,11 @@
                     yI = Math.floor(Math.random() * 999) % 8; 
                     while (board[xI][yI] != -1) xI = Math.floor(Math.random() * 1000) % 8,
                     yI = Math.floor(Math.random() * 999) % 8; 
-                    let nameINum = Math.floor(Math.random() * 999) % name[i].length; 
-                    let nameI = name[i][nameINum]; 
+                    let nameINum = Math.floor(Math.random() * 999) % nam[i].length; 
+                    let nameI = nam[i][nameINum]; 
                     document.body.innerHTML += "<div class=\"piece teamii\" id=\"piece" + String(Number(i) + 16)
-                    + "\" style=\"" + pos(xI, yI) + "display: none;\">" + nameI + "</div>"; 
+                    + "\" style=\"" + pos(xI, yI) + "display: none;\" onclick=\"control(" + xI + ", " + yI
+                    + ")\">" + nameI + "</div>"; 
                     board[xI][yI] = [1, i, nameINum]; 
                 }
             }
@@ -141,6 +157,23 @@
                 $("#board").children("tr").eq(x).children("td").eq(y).removeClass("hide"); 
                 if (boardXY != -1) document.getElementById("piece"
                 + String(Number(boardXY[0]) * 16 + Number(boardXY[1]))).style.display = "inline"; 
+            }
+            function openName(name)
+            {
+                localStorage.setItem("school.resume.name", name); 
+                localStorage.setItem("school.resume.logged", "logged"); 
+                new_web("../.."); 
+            }
+            function control(x, y) {
+                let boardXY = board[x][y]; 
+                let srcXY = "../../img/"; 
+                if (nam[boardXY[1]][boardXY[2]] == "lyf") srcXY += "lyf.gif"; 
+                else srcXY += nam[boardXY[1]][boardXY[2]] + ".png"; 
+                document.getElementById("control-img").src = srcXY; 
+                document.getElementById("control-name").innerHTML = nameCN[boardXY[1]][boardXY[2]]; 
+                $("#control").fadeToggle(); 
+                document.getElementById("control").style.left = String(8 + Number(y) * 51) + "px"; 
+                document.getElementById("control").style.top = String(8 + (Number(x) + 1) * 51) + "px"; 
             }
         </script>
     </head>
@@ -181,6 +214,10 @@
                     <td onclick="showPiece(7, 6)"></td><td onclick="showPiece(7, 7)"></td></tr>
             </tbody>
         </table>
-        
+        <div class="box" id="control"
+        style="position: absolute; left: 8px; top: 59px; padding: 20px 20px 10px 20px; display: none;">
+            <img id="control-img" src="../../img/lyf.gif" style="height: 100px;"><br>
+            <b onclick="openName(this.innerHTML)" style="cursor: pointer;" id="control-name"></b>
+        </div>
     </body>
 </html>
