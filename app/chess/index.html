@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Chess</title>
+        <style>
+            .greenname {
+                background: #82ca13;
+                color: green;
+                border: 1px solid green;
+                border-radius: 0.1em;
+            }
+            .yellowname {
+                background: #82ca13;
+                color: #f9cf82;
+                border: 1px solid green;
+                border-radius: 0.1em;
+            }
+            .highlight {
+                color: red;
+            }
+            
+            .table,table tr th, table tr td {
+                border:1px solid rgb(185, 185, 185); 
+            }
+            .table tr th, .table tr td {
+                min-width: 48px;
+            }
+            .table tr {
+                height: 51px;
+            }
+            .table {
+                text-align: center; 
+                border-collapse: collapse; 
+                padding:2px;
+                border-radius: 5px;
+            }
+            .hide {
+                background: #eaeaea;
+                cursor: pointer;
+            }
+
+            .piece {
+                padding-top: 12px; 
+                text-align: center; 
+                border: 1px solid rgb(185, 185, 185); 
+                border-radius: 50%; 
+                width: 50px; 
+                height: 38px;
+                position: absolute;
+                color: white;
+            }
+            .teami {
+                background: red;
+            }
+            .teamii {
+                background: blue;
+            }
+/* 
+            @keyframes rotateGreen {
+                from {
+                    transform-origin: 50% 50%;
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform-origin: 50% 50%;
+                    transform: rotate(120deg);
+                }
+            } */
+        </style>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                }
+            });
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub]); 
+        </script>
+        <script>
+            function new_web(webUrl)
+            {
+                window.open(webUrl); 
+            }
+            function open_web(webUrl)
+            {
+                location = webUrl; 
+            }
+            function mathjax_dy(elementId) {
+                if (!window.MathJax) {
+                    return;
+                }
+                window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub, document.getElementById(elementId)]);
+            }
+            function pos(x, y)
+            {
+                return "top: " + (8 + Number(x) * 51) + "px; left: " + (8 + Number(y) * 51) + "px;"; 
+            }
+            var board = [[-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
+            [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
+            [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
+            [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1]]; 
+            var name = [["ybj", "cyb"], ["wyx", "kyl"], ["lt", "qjh"], 
+            ["fyh", "sbw", "xry", "qhy", "yxd"], ["mbj", "kpq", "yzh", "hyk"], 
+            ["zcx"], ["ztzy"], ["lyf"]]; 
+            window.onload = function() {
+                let name = [["ybj", "cyb"], ["wyx", "kyl"], ["lt", "qjh"], 
+                ["fyh", "sbw", "xry", "qhy", "yxd"], ["mbj", "kpq", "yzh", "hyk"], 
+                ["zcx"], ["ztzy"], ["lyf"]]; 
+                $("#board tr td").addClass("hide"); 
+                for (let i = 0; i < 8; i++)
+                {
+                    let xI = Math.floor(Math.random() * 1000) % 8,
+                    yI = Math.floor(Math.random() * 999) % 8; 
+                    while (board[xI][yI] != -1) xI = Math.floor(Math.random() * 1000) % 8,
+                    yI = Math.floor(Math.random() * 999) % 8; 
+                    let nameINum = Math.floor(Math.random() * 999) % name[i].length; 
+                    let nameI = name[i][nameINum]; 
+                    document.body.innerHTML += "<div class=\"piece teami\" id=\"piece" + i
+                    + "\" style=\"" + pos(xI, yI) + "display: none;\">" + nameI + "</div>"; 
+                    board[xI][yI] = [0, i, nameINum]; 
+                }
+                for (let i = 0; i < 8; i++)
+                {
+                    let xI = Math.floor(Math.random() * 1000) % 8,
+                    yI = Math.floor(Math.random() * 999) % 8; 
+                    while (board[xI][yI] != -1) xI = Math.floor(Math.random() * 1000) % 8,
+                    yI = Math.floor(Math.random() * 999) % 8; 
+                    let nameINum = Math.floor(Math.random() * 999) % name[i].length; 
+                    let nameI = name[i][nameINum]; 
+                    document.body.innerHTML += "<div class=\"piece teamii\" id=\"piece" + String(Number(i) + 16)
+                    + "\" style=\"" + pos(xI, yI) + "display: none;\">" + nameI + "</div>"; 
+                    board[xI][yI] = [1, i, nameINum]; 
+                }
+            }
+            function showPiece(x, y) {
+                let boardXY = board[x][y]; 
+                $("#board").children("tr").eq(x).children("td").eq(y).removeClass("hide"); 
+                if (boardXY != -1) document.getElementById("piece"
+                + String(Number(boardXY[0]) * 16 + Number(boardXY[1]))).style.display = "inline"; 
+            }
+        </script>
+    </head>
+    <body>
+        <table class="table">
+            <tbody id="board">
+                <tr><td onclick="showPiece(0, 0)"></td><td onclick="showPiece(0, 1)"></td>
+                    <td onclick="showPiece(0, 2)"></td><td onclick="showPiece(0, 3)"></td>
+                    <td onclick="showPiece(0, 4)"></td><td onclick="showPiece(0, 5)"></td>
+                    <td onclick="showPiece(0, 6)"></td><td onclick="showPiece(0, 7)"></td></tr>
+                <tr><td onclick="showPiece(1, 0)"></td><td onclick="showPiece(1, 1)"></td>
+                    <td onclick="showPiece(1, 2)"></td><td onclick="showPiece(1, 3)"></td>
+                    <td onclick="showPiece(1, 4)"></td><td onclick="showPiece(1, 5)"></td>
+                    <td onclick="showPiece(1, 6)"></td><td onclick="showPiece(1, 7)"></td></tr>
+                <tr><td onclick="showPiece(2, 0)"></td><td onclick="showPiece(2, 1)"></td>
+                    <td onclick="showPiece(2, 2)"></td><td onclick="showPiece(2, 3)"></td>
+                    <td onclick="showPiece(2, 4)"></td><td onclick="showPiece(2, 5)"></td>
+                    <td onclick="showPiece(2, 6)"></td><td onclick="showPiece(2, 7)"></td></tr>
+                <tr><td onclick="showPiece(3, 0)"></td><td onclick="showPiece(3, 1)"></td>
+                    <td onclick="showPiece(3, 2)"></td><td onclick="showPiece(3, 3)"></td>
+                    <td onclick="showPiece(3, 4)"></td><td onclick="showPiece(3, 5)"></td>
+                    <td onclick="showPiece(3, 6)"></td><td onclick="showPiece(3, 7)"></td></tr>
+                <tr><td onclick="showPiece(4, 0)"></td><td onclick="showPiece(4, 1)"></td>
+                    <td onclick="showPiece(4, 2)"></td><td onclick="showPiece(4, 3)"></td>
+                    <td onclick="showPiece(4, 4)"></td><td onclick="showPiece(4, 5)"></td>
+                    <td onclick="showPiece(4, 6)"></td><td onclick="showPiece(4, 7)"></td></tr>
+                <tr><td onclick="showPiece(5, 0)"></td><td onclick="showPiece(5, 1)"></td>
+                    <td onclick="showPiece(5, 2)"></td><td onclick="showPiece(5, 3)"></td>
+                    <td onclick="showPiece(5, 4)"></td><td onclick="showPiece(5, 5)"></td>
+                    <td onclick="showPiece(5, 6)"></td><td onclick="showPiece(5, 7)"></td></tr>
+                <tr><td onclick="showPiece(6, 0)"></td><td onclick="showPiece(6, 1)"></td>
+                    <td onclick="showPiece(6, 2)"></td><td onclick="showPiece(6, 3)"></td>
+                    <td onclick="showPiece(6, 4)"></td><td onclick="showPiece(6, 5)"></td>
+                    <td onclick="showPiece(6, 6)"></td><td onclick="showPiece(6, 7)"></td></tr>
+                <tr><td onclick="showPiece(7, 0)"></td><td onclick="showPiece(7, 1)"></td>
+                    <td onclick="showPiece(7, 2)"></td><td onclick="showPiece(7, 3)"></td>
+                    <td onclick="showPiece(7, 4)"></td><td onclick="showPiece(7, 5)"></td>
+                    <td onclick="showPiece(7, 6)"></td><td onclick="showPiece(7, 7)"></td></tr>
+            </tbody>
+        </table>
+        
+    </body>
+</html>

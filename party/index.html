@@ -46,7 +46,8 @@
             var openArea = localStorage.getItem("school.resume.subject"); 
             window.onload = function () {
                 openArea = localStorage.getItem("school.resume.subject"); 
-                if (localStorage.getItem("school.resume.logged") == null || openArea != "All") open_web("../login/"); 
+                if ((localStorage.getItem("school.resume.logged") == null
+                && localStorage.getItem("confirm") != "school-confirm") || openArea != "All") open_web("../login/"); 
                 localStorage.removeItem("school.resume.logged"); 
                 let name = localStorage.getItem("school.resume.party"); 
                 if (changeParty(name) == "Party not found. ") open_web("../login/"); 
@@ -110,6 +111,7 @@
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">华奕开</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">孙博为</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">刘涛</b>、"
+                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">周敬轩</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">曾楚笑</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">钱锦鸿</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈思涵</b>、"
