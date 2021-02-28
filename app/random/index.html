@@ -2,23 +2,48 @@
 
 <html>
     <head>
-        <title></title>
-        <link rel="shortcut icon" href="img/maxyellow.png" type="image/x-icon">
+        <title>Random</title>
+        <link rel="shortcut icon" href="../../img/g.ico" type="image/x-icon">
         <script>
-            var src = ["zcx-2.png", "csh.png", "hyk.png", "kpq.png", "lt-2.png", "qjh.png", "sbw-2.png", "wyx-2.png", 
-            "yzh-2.png", "yxd.png"]; 
-            window.onload = function() {
+            var src = ["zcx-2.png", "csh.png", "hyk.png", "kpq.png", "lt-2.png", "qjh.png", "qhy-2.png", 
+            "sbw-2.png", "wyx-2.png", "yzh-2.png", "yxd.png", "zjx-2.png"]; 
+            window.onload = rand; 
+            function rand() {
                 document.getElementById("photo").src = "../../img/"
                 + src[Math.floor(Math.random() * 100) % src.length]; 
             }
             
         </script>
         <style>
+            .button {
+                border-radius: 50%; 
+                display: inline-block; 
+                margin: 0 4px; 
+                padding: 12px;
+                overflow: hidden; 
+                vertical-align: middle; 
+                cursor: pointer; 
+                height: 24px; 
+                width: 24px; 
+                flex: 0 0 auto; 
+                white-space: nowrap; 
+                font: 13px/27px Roboto,RobotoDraft,Arial,sans-serif; 
+                z-index: 986;
+            }
+            .button:hover {
+                background: #eaeaea;
+            }
         </style>
     </head>
     <body>
         <div id="body" style="width: 100%; height: 100%; text-align: center; vertical-align: middle;">
             <img id="photo" style="height: 500px; margin: 0 auto;">
+        </div>
+        <div class="button" onclick="location = '../'" style="position: absolute; bottom: 5px; left: 8px;">
+            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/home_black_24dp.png">
+        </div>
+        <div class="button" onclick="rand()" style="position: absolute; bottom: 5px; left: 56px;">
+            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/refresh_black_24dp.png">
         </div>
     </body>
 </html>

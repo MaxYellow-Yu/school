@@ -46,11 +46,41 @@
                 padding-left: 1.2em;
                 width: 12em;
             }
+            
+            .button {
+                border-radius: 50%; 
+                display: inline-block; 
+                margin: 0 4px; 
+                padding: 12px;
+                overflow: hidden; 
+                vertical-align: middle; 
+                cursor: pointer; 
+                height: 20px; 
+                width: 20px; 
+                flex: 0 0 auto; 
+                white-space: nowrap; 
+                font: 13px/27px Roboto,RobotoDraft,Arial,sans-serif; 
+                z-index: 986;
+            }
+            .button:hover {
+                background: #eaeaea;
+            }
+            @font-face {
+                font-family: Cuprum;
+                src: url(src/font/Cuprum.ttf);
+            }
         </style>
     </head>
     <body>
-        <div id="body">
-            Hello World!
-        </div>
+        <div id="body" style="font-family: Cuprum;"><ul>
+            <li>Random Roll Call
+            <div class="button" onclick="location = 'random'">
+                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_black_20dp.png">
+            </div></li>
+            <li>Chess Game
+            <div class="button" onclick="location = 'chess'">
+                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_black_20dp.png">
+            </div></li>
+        </ul></div>
     </body>
 </html>
