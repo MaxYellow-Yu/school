@@ -143,6 +143,10 @@
             {
                 return "top: " + (8 + Number(x) * 51) + "px; left: " + (8 + Number(y) * 51) + "px;"; 
             }
+            function posB(item) {
+                let x = item.style.top, y = item.style.left; 
+                return [(Number(x.substr(0, x.length-2)) - 8) / 51, (Number(y.substr(0, y.length-2)) - 8) / 51]; 
+            }
             var board = [[-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
@@ -151,13 +155,26 @@
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1]]; 
-            var nam = [["ybj", "cyb"], ["wyx", "kyl"], ["lt", "qjh"], 
+            var nam = [["ybj", "cyb"], ["kyl"], ["wyx", "lt", "qjh", "csh"], 
             ["fyh", "sbw", "xry", "qhy", "yxd"], ["mbj", "kpq", "yzh", "hyk"], 
             ["zcx"], ["ztzy"], ["lyf"]]; 
-            var nameCN = [["俞伯驹", "陈怿白"], ["王聿煊", "阚云雷"], ["刘涛", "钱锦鸿"], 
+            var nameCN = [["俞伯驹", "陈怿白"], ["阚云雷"], ["王聿煊", "刘涛", "钱锦鸿", "陈思涵"], 
             ["范语涵", "孙博为", "熊若渔", "邱泓议", "郁肖栋"], ["马伯驹", "阚皮球", "姚宗昊", "华奕开"], 
             ["曾楚笑"], ["张田泽宇"], ["吕一凡"]]; 
-            var blood = [[4, 4], [2, 4], [4, 4], [3, 1, 4, 4, 6], [4, 4, 4, 4], [3], [4], [1]]; 
+            var skill = 
+            [
+                [["金刚不坏：当受到攻击时，有50%的概率闪避；自己攻击不会受到伤害。"], ["箭步如飞：速度为3"]], 
+                [[]], 
+                [
+                    [], [], [], 
+                    ["神威大炮：可以隔着一枚棋子远程攻打另一枚。", "瞄准张田：无视任何屏障直接对场内敌方张田泽宇进行攻击。"]
+                ], 
+                [[], [], [], ["自习没了：周围相邻的棋子被罚自习，无法移动。"], []], 
+                [[], [], [], []], 
+                [[]], [[]], [[]]
+            ]; 
+            var blood = [[4, 4], [4], [2, 4, 4, 4], [3, 1, 4, 4, 6], [4, 4, 4, 4], [3], [4], [1]]; 
+            var attack = [4, 3, 3, 2, 2, 1, 1, 1]; 
             var player = 0; 
             var going = 0; 
             var killedi = 0, killedii = 0; 
@@ -216,10 +233,34 @@
                 localStorage.setItem("school.resume.logged", "logged"); 
                 new_web("../.."); 
             }
+            function chooseWay(leftWay, x, y, lx, ly) {
+                if ((x != lx || y != ly) && document.getElementById("go" + x + "," + y) == null)
+                document.getElementById("go").innerHTML
+                += "<div class=\"go-empty\" onclick=\"go(" + lx + ", " + ly + ", "
+                + x + ", " + y + ")\" style=\"" + pos(x, y) + "\" id=\"go" + x + "," + y + "\"></div>"; 
+                // console.log(x, y, lx, ly); 
+
+                if (leftWay == 0) return; 
+
+                let dx = [-1, 0, 1, 0, 1, 1, -1, -1], dy = [0, -1, 0, 1, 1, -1, 1, -1]; 
+                for (let d = 0; d < 4; d++)
+                {
+                    let nx = Number(x) + Number(dx[d]), ny = Number(y) + Number(dy[d]); 
+                    if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8) continue; 
+                    if (board[nx][ny][0] == player || shown[nx][ny] == -1) continue; 
+                    if (board[nx][ny] == -1) chooseWay(leftWay - 1, nx, ny, lx, ly); 
+                    else if (board[nx][ny][0] != player && board[nx][ny][1] >= board[lx][ly][1]){
+                    document.getElementById("go").innerHTML
+                    += "<div class=\"go-kill\" onclick=\"go(" + lx + ", " + ly + ", "
+                    + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
+                    }
+                }
+            }
             function control(x, y) {$("#control").fadeToggle(function () {
                 $("#blood").empty(); 
                 let boardXY = board[x][y]; 
                 let srcXY = "../../img/"; 
+                let skillXY = skill[boardXY[1]][boardXY[2]]; 
                 if (nam[boardXY[1]][boardXY[2]] == "lyf") srcXY += "lyf.gif"; 
                 else srcXY += nam[boardXY[1]][boardXY[2]] + ".png"; 
                 document.getElementById("control-img").src = srcXY; 
@@ -227,26 +268,59 @@
                 // if (document.getElementById("control").style.display = "none")
                 // document.getElementById("control").style.display = "inline";
                 // else document.getElementById("control").style.display = "none";
-                document.getElementById("control").style.left = String(8 + (Number(y) + 1) * 51) + "px"; 
-                document.getElementById("control").style.top = String(8 + (Number(x) + 1) * 51) + "px"; 
+                let pospls = 1; 
+                if (boardXY[1] == 0 && boardXY[2] == 1) pospls = 2; 
+                document.getElementById("control").style.left = String(8 + (Number(y) + pospls) * 51) + "px"; 
+                document.getElementById("control").style.top = String(8 + (Number(x) + pospls) * 51) + "px"; 
                 for (let i = 0; i < boardXY[3]; i++) document.getElementById("blood").innerHTML
                 += "<img src=\"../../img/heart.png\" style=\"width: 25px\">"; 
+                document.getElementById("skill").innerHTML = ""; 
+                for (let i = 0; i < skillXY.length; i++) document.getElementById("skill").innerHTML
+                += "<li>" + skillXY[i] + "</li>"; 
                 if (player == boardXY[0] && going == 0)
                 {
                     going = 2; 
-                    let dx = [-1, 0, 1, 0], dy = [0, -1, 0, 1]; 
-                    for (let d = 0; d < 4; d++)
+                    if (boardXY[1] == 0 && boardXY[2] == 1) chooseWay(3, x, y, x, y); 
+                    else chooseWay(1, x, y, x, y); 
+                    let dx = [-1, 0, 1, 0, 1, 1, -1, -1], dy = [0, -1, 0, 1, 1, -1, 1, -1]; 
+                    let frozen = false; 
+                    for (let d = 0; d < 8; d++)
                     {
                         let nx = Number(x) + Number(dx[d]), ny = Number(y) + Number(dy[d]); 
                         if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8) continue; 
                         if (board[nx][ny][0] == player || shown[nx][ny] == -1) continue; 
-                        if (board[nx][ny] == -1) document.getElementById("go").innerHTML
-                        += "<div class=\"go-empty\" onclick=\"go(" + x + ", " + y + ", "
-                        + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
-                        else if (board[nx][ny][0] != player && board[nx][ny][1] >= board[x][y][1]){
-                        document.getElementById("go").innerHTML
+                        if (board[nx][ny][0] != player && board[nx][ny][1] == 3 && board[nx][ny][2] == 3)
+                        {
+                            frozen = true; break; 
+                        }
+                    }
+                    if (frozen)
+                    {
+                        document.getElementById("go").innerHTML = ""; 
+                        going = 0; 
+                        return; 
+                    }
+                    if (boardXY[1] == 2 && boardXY[2] == 3)
+                    {
+                        let ztzy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 6))
+                        let ztx = posB(ztzy)[0], zty = posB(ztzy)[1]; 
+                        if (shown[ztx][zty] == 0) document.getElementById("go").innerHTML
                         += "<div class=\"go-kill\" onclick=\"go(" + x + ", " + y + ", "
-                        + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
+                        + ztx + ", " + zty + ", 10)\" style=\"" + pos(ztx, zty) + "\"></div>"; 
+                        for (let d = 0; d < 4; d++)
+                        {
+                            let nx = Number(x) + dx[d], ny = Number(y) + dy[d]; 
+                            while (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8)
+                            && board[nx][ny] == -1 && shown[nx][ny] == 0) nx += dx[d], ny += dy[d]; 
+                            if ((nx < 0 || nx >= 8 || ny < 0 || ny >= 8) || shown[nx][ny] == -1) continue; 
+                            nx += dx[d], ny += dy[d]; 
+                            while (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8)
+                            && board[nx][ny] == -1 && shown[nx][ny] == 0) nx += dx[d], ny += dy[d]; 
+                            if ((nx < 0 || nx >= 8 || ny < 0 || ny >= 8) || shown[nx][ny] == -1) continue; 
+                            if (board[nx][ny][0] == player) continue; 
+                            document.getElementById("go").innerHTML
+                            += "<div class=\"go-kill\" onclick=\"go(" + x + ", " + y + ", "
+                            + nx + ", " + ny + ", 10)\" style=\"" + pos(nx, ny) + "\"></div>"; 
                         }
                     }
                 }
@@ -260,7 +334,7 @@
             function min(a, b) {
                 if (a<b)return a; return b; 
             }
-            function go(x, y, nx, ny) {
+            function go(x, y, nx, ny, attackAddition = 0) {
                 let bxy = board[x][y], nbxy = board[nx][ny]; 
                 $("#go").empty(); 
                 $("#control").fadeOut(); 
@@ -280,9 +354,11 @@
                 }
                 else
                 {
-                    board[nx][ny][3] -= 2; 
-                    board[x][y][3]--; 
+                    if (!(nbxy[1] == 0 && nbxy[2] == 0 && Math.floor(Math.random() * 11) % 2 == 1))
+                    board[nx][ny][3] -= attack[bxy[1]] + attackAddition; 
+                    if (bxy[1] != 0 || bxy[2] != 0) board[x][y][3]--; 
                     nbxy = board[nx][ny]; bxy = board[x][y]; 
+                    let canmove = false; 
                     if (nbxy[3] <= 0) {
                         if (nbxy[0] == 0) document.getElementById("piece"
                         + String(Number(nbxy[0]) * 16 + Number(nbxy[1]))).style = pos(killedi++, 9); 
@@ -290,13 +366,11 @@
                         + String(Number(nbxy[0]) * 16 + Number(nbxy[1]))).style = pos(killedii++, 10); 
                         if (killedi == 8)
                         {
-                            alert("Blue Wins!"); 
-                            location.reload(); 
+                            alert("congratulations.png", "Blue Wins!"); 
                         }
                         else if (killedii == 8)
                         {
-                            alert("Red Wins!"); 
-                            location.reload(); 
+                            alert("congratulations.png", "Red Wins!"); 
                         }
                         document.getElementById("piece"
                         + String(Number(nbxy[0]) * 16 + Number(nbxy[1]))).onclick = function () {}; 
@@ -306,7 +380,7 @@
                         }
                         document.getElementById("piece"
                         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(nx, ny); 
-                        board[x][y] = -1; board[nx][ny] = bxy; 
+                        board[nx][ny] = -1; canmove = true; 
                     }
                     if (bxy[3] <= 0) {
                         if (bxy[0] == 0) document.getElementById("piece"
@@ -315,31 +389,38 @@
                         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(killedii++, 10); 
                         if (killedi == 8)
                         {
-                            alert("Blue Wins!"); 
-                            location.reload(); 
+                            alert("congratulations.png", "Blue Wins!"); 
                         }
                         else if (killedii == 8)
                         {
-                            alert("Red Wins!"); 
-                            location.reload(); 
+                            alert("congratulations.png", "Red Wins!"); 
                         }
                         document.getElementById("piece"
                         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).onclick = function () {}; 
-                        board[x][y] = -1;
+                        board[x][y] = -1; canmove = false; 
+                    }
+                    if (canmove)
+                    {
+                        board[x][y] = -1; 
+                        board[nx][ny] = bxy; 
                     }
                 }
             }
             function giveUp() {
                 if (player == 0)
                 {
-                    alert("Blue Wins!"); 
-                    location.reload(); 
+                    alert("congratulations.png", "Blue Wins!"); 
                 }
                 else
                 {
-                    alert("Red Wins!"); 
-                    location.reload(); 
+                    alert("congratulations.png", "Red Wins!"); 
                 }
+            }
+            function alert(img, head, text="") {
+                document.getElementById("alert-img").src = "../../img/" + img; 
+                document.getElementById("alert-head").innerHTML = head; 
+                document.getElementById("alert-text").innerHTML = text; 
+                $("#alert").fadeIn(); 
             }
         </script>
     </head>
@@ -381,18 +462,23 @@
             </tbody>
         </table>
         <div class="box" id="control"
-        style="position: absolute; left: 8px; top: 59px; padding: 20px 20px 10px 20px; display: none;">
-            <img id="control-img" src="../../img/lyf.gif" style="height: 100px;"><br>
+        style="position: absolute; left: 8px; top: 59px; padding: 20px 20px 10px 20px; width: 300px; display: none;">
+            <img id="control-img" src="" style="width: 100px;"><br>
             <b onclick="openName(this.innerHTML)" style="cursor: pointer;" id="control-name"></b>
             <div id="blood"></div>
+            <div style="position: absolute; left: 130px; top: 20px; max-width: 195px;
+            word-break: break-all;">技能：
+            <ul id="skill"></ul></div>
         </div>
         <div class="button" onclick="location = '../'" style="position: absolute; bottom: 5px; left: 8px;">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/home_black_24dp.png">
         </div>
         <div class="button" onclick="giveUp()" style="position: absolute; bottom: 5px; left: 56px;">
-            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/chat_black_24dp.png">
+            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/flag_black_24dp.png">
         </div>
-        <div class="button" onclick="alert('The higher level pieces can eat the lower ones. ')"
+        <div class="button" onclick="
+        alert('instruction.png', 'Instruction'
+        , 'The higher level pieces can eat the lower ones. ')"
         style="position: absolute; bottom: 5px; left: 104px;">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/help_black_24dp.png">
         </div>
@@ -402,5 +488,17 @@
             margin-left: 2px; margin-top: 2px;" id="player"></div>
         </div>
         <div id="go"></div>
+        <div id="alert" class="box" style="padding: 20px 20px 20px 20px; 
+        position: absolute; left: 550px; top: 100px; width: 200px; display: none;">
+            <img src="" style="height: 200px;" id="alert-img">
+            <h2 style="text-align: center;" id="alert-head"></h2>
+            <a id="alert-text"></a><br>
+            <div class="button" onclick="location.reload()">
+                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/refresh_black_24dp.png">
+            </div>
+            <div class="button" onclick="$('#alert').fadeOut()">
+                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/close_black_24dp.png">
+            </div>
+        </div>
     </body>
 </html>

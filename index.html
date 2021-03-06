@@ -45,10 +45,11 @@
         <script type="text/template" id="wyx-knowledge">
             <style>
                 .word {
-                    color: blue; 
+                    color: #0080cc; 
                 }
             </style>
             <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
+            <img style="height: 13px;" src="img/knowledge-key.png">
             <b class="word" style="font-size: 15px">jason</b>&emsp; /ˈdʒeɪsən/<br>
             <b>noun</b><br>
             1. shit. 狗屎。&ensp;<b class="word">a piece of jason</b>&ensp;一坨狗屎&emsp; 
@@ -67,7 +68,7 @@
             2. the number of w(22). w(22)函数的值。
             3. a lot, not a little. 很多很多。 <i>a jason of jason</i>&ensp;很多狗屎<br>
             <hr>
-            <b style="font-size: 20px">Super Advanced Mathematics 超等数学</b><br>
+            <b style="font-size: 20px">Maxematics 超等数学</b><br>
             <b style="font-size: 15px">1.1&ensp;$w(22)$的性质</b><br>
             $$\Sigma w(22)=+\infty$$
             <b style="font-size: 15px">1.2&ensp;杰森与杰森常数（$\text{J}$）</b><br>
@@ -90,7 +91,7 @@
         <script type="text/template" id="lyf-knowledge">
             <style>
                 .word {
-                    color: blue; 
+                    color: #0080cc; 
                 }
             </style>
             <b style="font-size: 20px">On the Origin of Species II 物种起源（二）</b><br>
@@ -101,10 +102,11 @@
         <script type="text/template" id="hyk-knowledge">
             <style>
                 .word {
-                    color: blue; 
+                    color: #0080cc; 
                 }
             </style>
             <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
+            <img style="height: 13px;" src="img/knowledge-key.png">
             <b class="word" style="font-size: 15px">ken</b>&emsp; /ken/<br>
             <b>noun</b><br>
             1. shit. 狗屎。&ensp;<b class="word">a piece of ken</b>&ensp;一坨狗屎&emsp; 
@@ -120,13 +122,33 @@
         <script type="text/template" id="kpq-knowledge">
             <style>
                 .word {
-                    color: blue; 
+                    color: #0080cc; 
                 }
             </style>
             <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
             <b class="word" style="font-size: 15px">allen</b>&emsp; /ˈælən/<br>
             <b>noun</b><br>
             Ball. 皮球。
+        </script>
+        <script type="text/template" id="qhy-knowledge">
+            <style>
+                .word {
+                    color: #0080cc; 
+                }
+            </style>
+            <b style="font-size: 20px">Max Advanced Learner's English-Chinese Dictionary 马克斯高阶英汉双解词典</b><br>
+            <img style="height: 13px;" src="img/knowledge-key.png">
+            <b class="word" style="font-size: 15px">cal</b>&emsp; /kæl/<br>
+            <b>pron.</b><br>
+            I. 我。<br>
+            <img style="height: 13px;" src="img/knowledge-key.png">
+            <b class="word" style="font-size: 15px">calley</b>&emsp; /ˈkælɪ/<br>
+            <b>pron.</b><br>
+            You. 你。<br>
+            <img style="height: 13px;" src="img/knowledge-key.png">
+            <b class="word" style="font-size: 15px">calleymar</b>&emsp; /ˈkælɪmɑ:/<br>
+            <b>pron.</b><br>
+            He. 他。<br>
         </script>
         <script>
             function new_web(webUrl)
@@ -173,6 +195,8 @@
                 = document.getElementById("hyk-knowledge").textContent; 
                 if (chkName == "阚皮球") document.getElementById("knowledge").innerHTML
                 = document.getElementById("kpq-knowledge").textContent; 
+                if (chkName == "邱泓议") document.getElementById("knowledge").innerHTML
+                = document.getElementById("qhy-knowledge").textContent; 
                 mathjax_dy("knowledge"); 
             }
             function changeName(name)
@@ -532,8 +556,8 @@
                     document.getElementById("table.children").innerHTML = "无"; 
                     document.getElementById("table.skill").innerHTML = "扣分、罚自习"; 
                     document.getElementById("table.crime").innerHTML = "无"; 
-                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-blue.png')"; 
-                    document.getElementById("crystal-ball").onclick = function(){}; 
+                    document.getElementById("crystal-ball").style.background = "url('img/crystal-ball-red.png')"; 
+                    document.getElementById("crystal-ball").onclick = knowledge; 
                     return "Completed!"; 
                 }
                 if (name == "郁肖栋" && (openArea == "All"))
