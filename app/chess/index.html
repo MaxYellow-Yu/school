@@ -478,7 +478,10 @@
         </div>
         <div class="button" onclick="
         alert('instruction.png', 'Instruction'
-        , 'The higher level pieces can eat the lower ones. ')"
+        , 'The higher level pieces can eat the lower ones. <hr><small>Version 1.1.0'
+        + '<ul><li>Fix a bug</li><li>Add higher attack to the higher levels</li>'
+        + '<li>Beautify the pop-up window</li><li>Add CSH to chess</li><li>Move WYX to the 3rd level</li>'
+        + '<li>Add skill to CYB & YBJ & QHY & CSH</li></ul></small>')"
         style="position: absolute; bottom: 5px; left: 104px;">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/help_black_24dp.png">
         </div>
@@ -492,7 +495,7 @@
         position: absolute; left: 550px; top: 100px; width: 200px; display: none;">
             <img src="" style="height: 200px;" id="alert-img">
             <h2 style="text-align: center;" id="alert-head"></h2>
-            <a id="alert-text"></a><br>
+            <div id="alert-text" style="max-height: 100px; overflow-y: scroll;"></div><br>
             <div class="button" onclick="location.reload()">
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/refresh_black_24dp.png">
             </div>
