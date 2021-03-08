@@ -23,8 +23,10 @@
         </style>
         <script type="text/template" id="table-mode">
             <tr><td colspan="2">党徽</td><td><b><img id="table.img" style="height: 10em;"></b></td></tr>
+            <tr><td colspan="2">主席</td><td id="table.chairman"></td></tr>
             <tr><td colspan="2">总书记</td><td id="table.leader"></td></tr>
             <tr><td colspan="2">副总书记</td><td id="table.vice-leader"></td></tr>
+            <tr><td colspan="2">人资部长</td><td id="table.member-admin"></td></tr>
             <tr><td colspan="2">军政部长</td><td id="table.army-leader"></td></tr>
             <tr><td colspan="2">外交部长</td><td id="table.diplomat"></td></tr>
             <tr><td colspan="2">内勤部长</td><td id="table.cook"></td></tr>
@@ -62,25 +64,26 @@
                 {
                     document.getElementById("table.img").src = "../img/wb-pt.png"; 
                     document.getElementById("table.law").innerHTML = "<a style=\"color: white\">暂时不可见</a>"; 
+                    document.getElementById("table.chairman").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">王聿煊</b>"; 
                     document.getElementById("table.leader").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈怿白</b>"; 
                     document.getElementById("table.vice-leader").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">王聿煊</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚云雷</b>"; 
+                    document.getElementById("table.member-admin").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>"; 
                     document.getElementById("table.army-leader").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">马伯驹</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈思涵</b>（副）"; 
                     document.getElementById("table").innerHTML
-                    += "<tr><td rowspan=\"3\">军队</td><td>炮兵连</td><td>"
+                    += "<tr><td rowspan=\"2\">军队</td><td>炮兵连</td><td>"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈思涵</b>"
                     + "</td></tr><tr><td>陆军</td><td>"
                     + "<b style=\"cursor: pointer\" onclick=\"\\*openName(this.innerHTML)*\\\">周琦凌</b>"
                     + "</td></tr>"
-                    + "</td></tr><tr><td>海军</td><td>"
-                    + "<b style=\"cursor: pointer\" onclick=\"\\*openName(this.innerHTML)*\\\">王子越</b>"
-                    + "</td></tr>"
-                    + "<tr><td rowspan=\"4\">纪事</td><td>天王一大</td><td style=\"font-size: xx-small;\">"
+                    + "<tr><td rowspan=\"6\">纪事</td><td>天王一大</td><td style=\"font-size: xx-small;\">"
                     + "确定了天一王八党的正式成立。决定了党的领导人为陈怿白（<img src=\"../img/cyb.png\""
                     + "style=\"height: 20px;\">）。确立的党在2020至2021届班长选举中的政治方针。</td>"
                     + "<tr><td>冬月半会战</td><td style=\"font-size: xx-small;\">庚子年冬月"
@@ -94,14 +97,21 @@
                     + "<tr><td>天王二大</td><td style=\"font-size: xx-small;\">庚子年腊月初七，天王二大举行。大会开除了"
                     + "<img src=\"../img/lyf.gif\" style=\"height: 20px;\">的党籍。大会确立了党徽为Red Star Over The Earth"
                     + "，党歌为《革命万岁啊哩哩》，党的英文名称为Turtle Party of Tianyi（TPT）。肯定了以陈怿白、俞伯驹为首"
-                    + "的马课斯主义的正确性，确立了其在天王中央的领导地位。"; 
+                    + "的马课斯主义的正确性，确立了其在天王中央的领导地位。</td></tr>"
+                    + "<tr><td>三五反革命政变</td><td style=\"font-size: xx-small;\">辛丑年正月廿二，王八党创始人"
+                    + "<img src=\"../img/wyx.png\" style=\"height: 20px;\">在多次违背党的纲领后发起了一场影响"
+                    + "了整个少二一班的反革命政变，向老师报告了上课写作业、罚自习时看书的相关情况，严重违反党的政治方针"
+                    + "和纲领，也为随后召开的天王三大起到铺垫作用。</td></tr>"
+                    + "<tr><td>天王三大</td><td style=\"font-size: xx-small;\">辛丑年正月廿五，天王三大举行。大会决定"
+                    + "<img src=\"../img/wyx.png\" style=\"height: 20px;\">当选为党的主席，并全票通过了王八党主席"
+                    + "的终身傀儡制，即一旦当选为王八党主席，终身不得卸任，且唯一的权利与义务是全部承担王八当的负面责任。"
+                    + "同时此次大会明确了严禁用钉子公然摆出TPT造型。确立了马课斯主义将继续实行。</td></tr>"; 
                     document.getElementById("table.diplomat").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚云雷</b>"; 
                     document.getElementById("table.cook").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚皮球</b>"; 
                     document.getElementById("table.member").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈怿白</b>、"
-                    + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">王聿煊</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">马伯驹</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">阚云雷</b>、"
@@ -116,7 +126,6 @@
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">钱锦鸿</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">陈思涵</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"\\\\openName(this.innerHTML)\\\\\">周绮凌</b>、"
-                    + "<b style=\"cursor: pointer\" onclick=\"\\\\openName(this.innerHTML)\\\\\">王子越</b>、"
                     + "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">姚宗昊</b>"; 
                     document.getElementById("table.creater").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">俞伯驹</b>、"
@@ -131,9 +140,13 @@
                     document.getElementById("table.img").src = "../img/nc-pt.png"; 
                     document.getElementById("table.law").innerHTML
                     = "<b>Hitler Forever Die!</b>"; 
+                    document.getElementById("table.chairman").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">张田泽宇</b>"; 
                     document.getElementById("table.leader").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">张田泽宇</b>"; 
                     document.getElementById("table.vice-leader").innerHTML
+                    = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">张田泽宇</b>"; 
+                    document.getElementById("table.member-admin").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">张田泽宇</b>"; 
                     document.getElementById("table.army-leader").innerHTML
                     = "<b style=\"cursor: pointer\" onclick=\"openName(this.innerHTML)\">张田泽宇</b>"; 
@@ -165,8 +178,10 @@
         <table cellspacing="0" border="1">
             <tbody id="table">
                 <tr><td colspan="2">党徽</td><td><b><img id="table.img" style="height: 10em;"></b></td></tr>
+                <tr><td colspan="2">主席</td><td id="table.chairman"></td></tr>
                 <tr><td colspan="2">总书记</td><td id="table.leader"></td></tr>
                 <tr><td colspan="2">副总书记</td><td id="table.vice-leader"></td></tr>
+                <tr><td colspan="2">人资部长</td><td id="table.member-admin"></td></tr>
                 <tr><td colspan="2">军政部长</td><td id="table.army-leader"></td></tr>
                 <tr><td colspan="2">外交部长</td><td id="table.diplomat"></td></tr>
                 <tr><td colspan="2">内勤部长</td><td id="table.cook"></td></tr>
