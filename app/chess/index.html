@@ -179,8 +179,8 @@
                     [2, 3]
                 ], 
                 [[], [], [], [4], []], 
-                [[], [6], [], []], 
-                [[]], [[]], [[5]]
+                [[], [6], [7], []], 
+                [[]], [[]], [[5, 8]]
             ]; 
             var ridable = 
             [
@@ -191,7 +191,8 @@
             ]; 
             var skillCN = ["金刚不坏：当受到攻击时，有50%的概率闪避；自己攻击不会受到伤害。", "箭步如飞：速度为3", 
             "神威大炮：可以隔着一枚棋子远程攻打另一枚。", "瞄准张田：无视任何屏障直接对场内敌方张田泽宇进行攻击。", 
-            "自习没了：周围相邻的棋子被罚自习，无法移动。", "迅捷小猴：速度为2", "跳跃皮球：跳过若干棋子或未翻开的格子。"]; 
+            "自习没了：周围相邻的棋子被罚自习，无法移动。", "迅捷小猴：速度为2", "跳跃皮球：跳过若干棋子或未翻开的格子。", 
+            "狡诈司机：可以开车。", "初生小猴：可以攻击场内所有角色"]; 
             var blood = [[4, 4], [4, 2], [4, 4, 4], [3, 1, 4, 4, 6], [4, 4, 4, 4], [3], [4], [1]]; 
             var attack = [4, 3, 3, 2, 2, 1, 1, 1]; 
             var player = 0; 
@@ -293,7 +294,8 @@
                     }
                     if (board[nx][ny][0] == player || shown[nx][ny] == -1) continue; 
                     if (board[nx][ny] == -1) chooseWay(leftWay - 1, nx, ny, lx, ly); 
-                    else if (board[nx][ny][0] != player && board[nx][ny][1] >= board[lx][ly][1]){
+                    else if (board[nx][ny][0] != player
+                    && (board[nx][ny][1] >= board[lx][ly][1] || haveSkill(lx, ly, 8))){
                     document.getElementById("go").innerHTML
                     += "<div class=\"go-kill\" onclick=\"go(" + lx + ", " + ly + ", "
                     + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
@@ -346,6 +348,7 @@
                     if (boardXY[5][1] == 0) document.getElementById("ridable").innerHTML
                     += "<img src=\"../../img/unlocked.png\" style=\"width: 20px\">"; 
                     document.getElementById("horse").innerHTML = "无"; 
+                    document.getElementById("horse").style.fontWeight = "none"; 
                     document.getElementById("horse-blood").innerHTML = ""; 
                     document.getElementById("horse-skill").innerHTML = ""; 
                 }
@@ -359,6 +362,7 @@
                     + "onclick=\"allowRide(this, " + x + ", " + y + ")\">"; 
                     if (boardXY[5].length > 1)
                     {
+                        document.getElementById("horse").style.fontWeight = "bold"; 
                         document.getElementById("horse").innerHTML = nameCN[boardXY[5][1][1]][boardXY[5][1][2]]; 
                         document.getElementById("horse-blood").innerHTML = ""; 
                         for (let i = 0; i < boardXY[5][1][3]; i++) document.getElementById("horse-blood").innerHTML
@@ -382,10 +386,43 @@
                 if (player == boardXY[0] && going == 0)
                 {
                     going = 2; 
-                    if (haveSkill(x, y, 1)) chooseWay(3, x, y, x, y); 
-                    if (haveSkill(x, y, 5)) chooseWay(2, x, y, x, y); 
-                    else chooseWay(1, x, y, x, y); 
                     let dx = [-1, 0, 1, 0, 1, 1, -1, -1], dy = [0, -1, 0, 1, 1, -1, 1, -1]; 
+                    if (haveSkill(x, y, 1)) chooseWay(3, x, y, x, y); 
+                    else if (haveSkill(x, y, 5)) chooseWay(2, x, y, x, y); 
+                    else if (haveSkill(x, y, 7))
+                    {
+                        for (let d = 0; d < 4; d++)
+                        {
+                            let nx = Number(x) + Number(dx[d]), ny = Number(y) + Number(dy[d]); 
+                            while (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8)
+                            && board[nx][ny] == -1 && shown[nx][ny] != -1)
+                            {
+                                document.getElementById("go").innerHTML
+                                += "<div class=\"go-empty\" onclick=\"go(" + x + ", " + y + ", "
+                                + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\" id=\"go"
+                                + nx + "," + ny + "\"></div>"; 
+                                nx += Number(dx[d]), ny += Number(dy[d]); 
+                            }
+                            if (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8)
+                            && board[nx][ny] != -1 && board[nx][ny][5][0] == 1
+                            && shown[nx][ny] != -1 && board[nx][ny][1] >= board[x][y][1]
+                            && board[x][y][5][0] == 0)
+                            {
+                                document.getElementById("go").innerHTML
+                                += "<div class=\"go-ride\" onclick=\"go(" + x + ", " + y + ", "
+                                + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
+                                continue; 
+                            }
+                            if (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8) && board[nx][ny] != -1
+                            && shown[nx][ny] != -1 && board[x][y][1] <= board[nx][ny][1]
+                            && board[nx][ny][0] != player)
+                            document.getElementById("go").innerHTML
+                            += "<div class=\"go-kill\" onclick=\"go(" + x + ", " + y + ", "
+                            + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\" id=\"go"
+                            + nx + "," + ny + "\"></div>"; 
+                        }
+                    }
+                    else chooseWay(1, x, y, x, y); 
                     let frozen = false; 
                     for (let d = 0; d < 8; d++)
                     {
@@ -472,6 +509,11 @@
                         }
                         sbxy = bxy[5][1]; 
                         bxy[5] = [0]; 
+                    }
+                    if (nbxy[5][1] == 0 && bxy[3] > 1 && nbxy[0] == player)
+                    {
+                        nbxy[5][1] = 1; 
+                        bxy[3]--; 
                     }
                     bxy[5].push(nbxy); 
                     bxy[4].push(nbxy[4][0]); 
@@ -645,15 +687,15 @@
         </table>
         <div class="box" id="control"
         style="position: absolute; left: 8px; top: 59px; padding: 20px 20px 10px 20px; 
-        width: 300px; height: 190px; display: none;">
+        width: 370px; height: 210px; display: none;">
             <img id="control-img" src="" style="width: 100px;"><br>
             <b onclick="openName(this.innerHTML)" style="cursor: pointer;" id="control-name"></b>
             <div id="blood"></div>
             <div id="ridable"></div>
-            <div style="position: absolute; left: 130px; top: 20px; max-width: 195px;
+            <div style="position: absolute; left: 130px; top: 20px; max-width: 245px;
             word-break: break-all;">技能：
             <ul id="skill"></ul></div>
-            <div style="position: absolute; left: 130px; top: 110px; max-width: 195px;
+            <div style="position: absolute; left: 130px; top: 130px; max-width: 245px;
             word-break: break-all;">坐骑：
             <a id="horse">无</a>
             <div id="horse-blood"></div><ul id="horse-skill"></ul></div>
@@ -667,6 +709,8 @@
         <div class="button" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.1.5'
+        + '<ul><li>Add skill to YZH</li><li>Riding the horses of your enemy will hurt you</li></ul></small>'
         + '<hr><small>Version 1.1.1'
         + '<ul><li>Change the execution of skills</li><li>LYF & KPQ & MBJ & YZH can be ridden</li>'
         + '<li>Add skill to LYF & KPQ</li><li>Move WYX to the 2nd level</li></ul></small>'
