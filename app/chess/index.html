@@ -509,6 +509,7 @@
                         }
                         sbxy = bxy[5][1]; 
                         bxy[5] = [0]; 
+                        bxy[4] = [bxy[4][0]]; 
                     }
                     if (nbxy[5][1] == 0 && bxy[3] > 1 && nbxy[0] == player)
                     {
@@ -538,7 +539,7 @@
                     }
                     if (!haveSkill(x, y, 0))
                     {
-                        if (board[x][y][5].length > 1) board[x][y][5][1][3]--; 
+                        if (board[x][y][5].length > 1 && board[x][y][5][0] != 1) board[x][y][5][1][3]--; 
                         else board[x][y][3]--; 
                     }
                     nbxy = board[nx][ny]; bxy = board[x][y]; 
@@ -709,6 +710,8 @@
         <div class="button" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.1.6'
+        + '<ul><li>Fix two bugs</li></ul></small>'
         + '<hr><small>Version 1.1.1.5'
         + '<ul><li>Add skill to YZH</li><li>Riding the horses of your enemy will hurt you</li></ul></small>'
         + '<hr><small>Version 1.1.1'
