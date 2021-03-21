@@ -68,12 +68,10 @@
                 cursor: pointer;
             }
             .effect-frozen {
-                border: 3px solid rgb(6, 180, 248); 
                 background: rgba(6, 180, 248, 0.2);
-                width: 46px; 
-                height: 46px;
+                width: 52px; 
+                height: 52px;
                 position: absolute;
-                cursor: pointer;
             }
 
             .piece {
@@ -191,7 +189,7 @@
                     [2, 3]
                 ], 
                 [[], [], [], [4], []], 
-                [[], [6], [7], []], 
+                [[12], [6], [7], []], 
                 [[]], [[]], [[5, 8]]
             ]; 
             var ridable = 
@@ -206,8 +204,9 @@
             "自习没了：任意一次操作后，50%的概率周围相邻的敌方棋子被罚自习，无法移动。", "迅捷小猴：速度为2。", 
             "跳跃皮球：跳过若干棋子或未翻开的格子。", "狡诈司机：可以开车。", "初生小猴：可以攻击场内所有角色。", 
             "锁骨之术：无法进行正常攻击。可以减少一根锁骨使距离为1的棋子减少3点血，距离为2的减少1点血。", 
-            "锁骨御敌：每次受到攻击仅减少1点血。", "越吃越胖：攻击造成其他棋子几点伤害，自己增加几点血量。上限10点。"]; 
-            var skillCtrl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]; 
+            "锁骨御敌：每次受到攻击仅减少1点血。", "越吃越胖：攻击造成其他棋子几点伤害，自己增加几点血量。上限10点。", 
+            "天降龟壳：触发本技能，自己减2血，周围8格内所有敌方棋子受到3点伤害。"]; 
+            var skillCtrl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]; 
             var blood = [[4, 4], [4, 2], [4, 4, 4], [3, 1, 4, 4, 6], [4, 4, 4, 4], [3], [4], [1]]; 
             var attack = [4, 3, 3, 2, 2, 1, 1, 1]; 
             var player = 0; 
@@ -404,7 +403,11 @@
                         let skillNXY = skill[boardXY[5][1][1]][boardXY[5][1][2]]; 
                         document.getElementById("horse-skill").innerHTML = ""; 
                         for (let i = 0; i < skillNXY.length; i++) document.getElementById("horse-skill").innerHTML
-                        += "<li>" + skillCN[skillNXY[i]] + "</li>"; 
+                        += "<li>" + skillCN[skillNXY[i]]
+                        + ((skillCtrl[skillNXY[i]] == 1 && boardXY[0] == player)
+                        ? "<button style=\"float: right\" onclick=\"skillGo(" + skillNXY[i] + ", " + x + ", " + y
+                        + ")\">ON</button>" : "")
+                        + "</li>"; 
                     }
                     else
                     {
@@ -535,25 +538,6 @@
                 player = 1 - player; 
                 if (player == 0) document.getElementById("player").style.background = "red"; 
                 else document.getElementById("player").style.background = "blue"; 
-                $("#showSkill").empty(); 
-                let qhy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 3)); 
-                let qx = posB(qhy)[0], qy = posB(qhy)[1]; 
-                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
-                {
-                    document.getElementById("showSkill").innerHTML
-                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
-                    effect[qx][qy] = 0; 
-                }
-                else effect[qx][qy] = -1; 
-                qhy = document.getElementById("piece" + String(16 * Number(player) + 3)); 
-                qx = posB(qhy)[0], qy = posB(qhy)[1]; 
-                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
-                {
-                    document.getElementById("showSkill").innerHTML
-                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
-                    effect[qx][qy] = 0; 
-                }
-                else effect[qx][qy] = -1; 
                 if (skillNum == 9)
                 {
                     let dis = [[], []]; 
@@ -584,6 +568,39 @@
                     attacking(1, x, y); 
                     findDead(); 
                 }
+                if (skillNum == 12)
+                {
+                    let dx = [-1, 0, 1, 0, 1, 1, -1, -1], dy = [0, -1, 0, 1, 1, -1, 1, -1]; 
+                    for (let d = 0; d < 8; d++)
+                    {
+                        let nx = Number(x) + Number(dx[d]), ny = Number(y) + Number(dy[d]); 
+                        if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8) continue; 
+                        if (board[nx][ny][0] != player || shown[nx][ny] == -1 || board[nx][ny] == -1) continue; 
+                        if (haveSkill(nx, ny, 0) && Math.random() > 0.5) continue; 
+                        attacking(3, nx, ny); 
+                    }
+                    attacking(2, x, y); 
+                    findDead(); 
+                }
+                $("#showSkill").empty(); 
+                let qhy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 3)); 
+                let qx = posB(qhy)[0], qy = posB(qhy)[1]; 
+                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
+                {
+                    document.getElementById("showSkill").innerHTML
+                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
+                    effect[qx][qy] = 0; 
+                }
+                else effect[qx][qy] = -1; 
+                qhy = document.getElementById("piece" + String(16 * Number(player) + 3)); 
+                qx = posB(qhy)[0], qy = posB(qhy)[1]; 
+                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
+                {
+                    document.getElementById("showSkill").innerHTML
+                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
+                    effect[qx][qy] = 0; 
+                }
+                else effect[qx][qy] = -1; 
             }
             function attacking(dec, x, y) {
                 if (board[x][y][5].length > 1 && board[x][y][5][0] != 1)
@@ -603,7 +620,7 @@
                     if (board[i][j][3] <= 0)
                     {
                         let bxy = board[i][j]; 
-                        if (bxy[5].length > 1 && bxy[5][1][3] <= 0) {
+                        if (bxy[5].length > 1 && bxy[5][0] != 1) {
                             if (bxy[5][1][0] == 0) document.getElementById("piece"
                             + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).style = pos(killedi++, 9); 
                             else document.getElementById("piece"
@@ -620,8 +637,8 @@
                             }
                             document.getElementById("piece"
                             + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).onclick = function () {}; 
-                            board[x][y][5].splice(1, 1); 
-                            board[x][y][4].splice(1, 1); 
+                            board[i][j][5].splice(1, 1); 
+                            board[i][j][4].splice(1, 1); 
                         }
                         if (bxy[0] == 0) document.getElementById("piece"
                         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(killedi++, 9); 
@@ -672,25 +689,6 @@
                 player = 1 - player; 
                 if (player == 0) document.getElementById("player").style.background = "red"; 
                 else document.getElementById("player").style.background = "blue"; 
-                $("#showSkill").empty(); 
-                let qhy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 3)); 
-                let qx = posB(qhy)[0], qy = posB(qhy)[1]; 
-                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
-                {
-                    document.getElementById("showSkill").innerHTML
-                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
-                    effect[qx][qy] = 0; 
-                }
-                else effect[qx][qy] = -1; 
-                qhy = document.getElementById("piece" + String(16 * Number(player) + 3)); 
-                qx = posB(qhy)[0], qy = posB(qhy)[1]; 
-                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
-                {
-                    document.getElementById("showSkill").innerHTML
-                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
-                    effect[qx][qy] = 0; 
-                }
-                else effect[qx][qy] = -1; 
                 if (nbxy == -1)
                 {
                     document.getElementById("piece"
@@ -722,7 +720,10 @@
                         if (!haveSkill(x, y, 0))
                         {
                             bxy[3]--; 
+                            board[x][y] = bxy; 
+                            board[nx][ny] = nbxy; 
                             findDead(); 
+                            if (bxy[3] <= 0) return; 
                         }
                     }
                     bxy[5].push(nbxy); 
@@ -840,6 +841,25 @@
                         board[nx][ny] = bxy; 
                     }
                 }
+                $("#showSkill").empty(); 
+                let qhy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 3)); 
+                let qx = posB(qhy)[0], qy = posB(qhy)[1]; 
+                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
+                {
+                    document.getElementById("showSkill").innerHTML
+                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
+                    effect[qx][qy] = 0; 
+                }
+                else effect[qx][qy] = -1; 
+                qhy = document.getElementById("piece" + String(16 * Number(player) + 3)); 
+                qx = posB(qhy)[0], qy = posB(qhy)[1]; 
+                if (qhy.innerHTML == "qhy" && Math.random() < 0.5 && shown[qx][qy] != -1 && qy < 8)
+                {
+                    document.getElementById("showSkill").innerHTML
+                    += "<div class=\"effect-frozen\" style=\"" + pos(qx, qy) + "\"></div>"; 
+                    effect[qx][qy] = 0; 
+                }
+                else effect[qx][qy] = -1; 
             }
             function giveUp() {
                 if (player == 0)
@@ -928,6 +948,8 @@
         <div class="button" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.2.1'
+        + '<ul><li>Fix two bugs</li><li>Add skill to MBJ</li></ul></small>'
         + '<hr><small>Version 1.1.2'
         + '<ul><li>Add skill to WYX & KYL</li><li>Change the skill of QHY</li><li>Fix a few bugs</li></ul></small>'
         + '<hr><small>Version 1.1.1.6'
