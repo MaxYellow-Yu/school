@@ -372,7 +372,10 @@
                 if (haveSkill(x, y, 1) || haveSkill(x, y, 5)) pospls = 2; 
                 document.getElementById("control").style.left = String(8 + (Number(y) + pospls) * 51) + "px"; 
                 document.getElementById("control").style.top = String(8 + (Number(x) + pospls) * 51) + "px"; 
-                for (let i = 0; i < boardXY[3]; i++) document.getElementById("blood").innerHTML
+                if (haveSkill(x, y, 9) || haveSkill(x, y, 10)) for (let i = 0; i < boardXY[3]; i++)
+                document.getElementById("blood").innerHTML
+                += "<img src=\"../../img/bone.png\" style=\"width: 25px\">"; 
+                else for (let i = 0; i < boardXY[3]; i++) document.getElementById("blood").innerHTML
                 += "<img src=\"../../img/heart.png\" style=\"width: 25px\">"; 
                 if (boardXY[5][0] == 1)
                 {
