@@ -107,6 +107,40 @@
                 box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
                 background-clip: padding-box;
             }
+            .menu-box {
+                bottom: 50px;
+                left: 110px;
+                display: none;
+                min-width: 200px;
+            }
+            .menu-box .menu-item {
+                list-style: none;
+                box-sizing: border-box;
+                display: block;
+                padding: 3px 20px;
+                clear: both;
+                font-weight: normal;
+                line-height: 1.42857143;
+                color: #333;
+                white-space: nowrap;
+                cursor: pointer;
+            }
+            .menu-box .menu-item span {
+                font-size: x-small;
+                border: 1px solid rgb(185, 185, 185);
+                border-radius: 4px;
+                color: rgb(185, 185, 185);
+                padding: 0px 4px;
+            }
+            .menu-box .menu-item:hover {
+                background: #eaeaea;
+            }
+            .menu-box .devider {
+                height: 1px;
+                margin: 9px 0;
+                overflow: hidden;
+                background-color: #e5e5e5;
+            }
 
             .button {
                 border-radius: 50%; 
@@ -140,6 +174,7 @@
         </style>
         <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
         <script>
+            // Copyright (c) 2021 Max Yellow. All rights reserved.
             function new_web(webUrl)
             {
                 window.open(webUrl); 
@@ -166,6 +201,10 @@
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1]]; 
+            // For each board[x][y] in the array, if board[x][y] == 1 then there is nothing in the cell.
+            // Otherwise board[x][y] == [TEAM(0/1), LEVEL(0-7), LEVEL NUMBER, BLOOD, 
+            // SKILL(Array: [Its skill, Its horse's skill(If there is a horse)]), 
+            // HORSE(Array: [(-1: Do not want to ride / 0: Want to ride / 1: Horse), Horse Info])]
             var shown = [[-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
             [-1, -1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1, -1], 
@@ -185,18 +224,18 @@
                 [[0], [1]], 
                 [[11], [9, 10]], 
                 [
-                    [], [], 
+                    [13], [], 
                     [2, 3]
                 ], 
                 [[], [], [], [4], []], 
-                [[12], [6], [7], []], 
-                [[]], [[]], [[5, 8]]
+                [[12], [6], [7], [14]], 
+                [[]], [[15]], [[5, 8]]
             ]; 
             var ridable = 
             [
                 [0, 0], [0, 0], [0, 0, 0], 
                 [0, 0, 0, 0, 0], 
-                [1, 1, 1, 0], 
+                [1, 1, 1, 1], 
                 [0], [0], [1]
             ]; 
             var skillCN = ["金刚不坏：当受到攻击时，有50%的概率闪避；自己攻击不会受到伤害。", "箭步如飞：速度为3。", 
@@ -205,13 +244,17 @@
             "跳跃皮球：跳过若干棋子或未翻开的格子。", "狡诈司机：可以开车。", "初生小猴：可以攻击场内所有角色。", 
             "锁骨之术：无法进行正常攻击。可以减少一根锁骨使距离为1的棋子减少3点血，距离为2的减少1点血。", 
             "锁骨御敌：每次受到攻击仅减少1点血。", "越吃越胖：攻击造成其他棋子几点伤害，自己增加几点血量。上限10点。", 
-            "天降龟壳：触发本技能，自己减2血，周围8格内所有敌方棋子受到3点伤害。"]; 
-            var skillCtrl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]; 
+            "天降龟壳：触发本技能，自己减2血，周围8格内所有敌方棋子受到2点伤害。", 
+            "飘飘所似：触发本技能进入量子态，免疫任何伤害，可以攻击任何棋子，速度为2。三回合后死亡。", 
+            "不太正经：斜向开车", "耗子尾汁：同学，我汤姆劝你耗子尾汁，好好反思。"]; 
+            var skillCtrl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0]; 
             var blood = [[4, 4], [4, 2], [4, 4, 4], [3, 1, 4, 4, 6], [4, 4, 4, 4], [3], [4], [1]]; 
             var attack = [4, 3, 3, 2, 2, 1, 1, 1]; 
             var player = 0; 
             var going = 0; 
             var killedi = 0, killedii = 0; 
+            // Skill Parameters
+            var ltSkill = [0, 0]; 
             window.onload = function() {
                 $("#board tr td").addClass("hide"); 
                 for (let i = 0; i < 8; i++)
@@ -283,6 +326,25 @@
                     effect[qx][qy] = 0; 
                 }
                 else effect[qx][qy] = -1; 
+                if (ltSkill[1 - player])
+                {
+                    let lt = document.getElementById("piece" + String(16 * Number(1 - player) + 2)); 
+                    lt.style.opacity = "0.5"; 
+                    let ltx = posB(lt)[0], lty = posB(lt)[1]; 
+                    ltSkill[1 - player]--; 
+                    if (ltSkill[1 - player] == 0)
+                    {
+                        attacking(20, ltx, lty); 
+                        findDead(); 
+                        if (board[ltx][lty] != -1)
+                        {
+                            attacking(20, ltx, lty); 
+                            findDead(); 
+                        }
+                    }
+                }
+                if (ltSkill[player])
+                    document.getElementById("piece" + String(16 * Number(player) + 2)).style.opacity = "0.5"; 
             }
             function openName(name)
             {
@@ -317,7 +379,8 @@
                     }
                     if (kylx != nx || kyly != ny) chooseWay(leftWay - 1, kylx, kyly, lx, ly); 
                     if (board[nx][ny] != -1 && board[nx][ny][5][0] == 1
-                    && (nx != lx || ny != ly) && shown[nx][ny] != -1 && board[nx][ny][1] >= board[lx][ly][1]
+                    && (nx != lx || ny != ly) && shown[nx][ny] != -1
+                    && (board[nx][ny][1] >= board[lx][ly][1] || (haveSkill(lx, ly, 13) && ltSkill[player]))
                     && board[lx][ly][5][0] == 0)
                     {
                         document.getElementById("go").innerHTML
@@ -328,7 +391,9 @@
                     if (board[nx][ny][0] == player || shown[nx][ny] == -1) continue; 
                     if (board[nx][ny] == -1) chooseWay(leftWay - 1, nx, ny, lx, ly); 
                     else if (board[nx][ny][0] != player
-                    && (board[nx][ny][1] >= board[lx][ly][1] || haveSkill(lx, ly, 8)) && !haveSkill(lx, ly, 9)){
+                    && (board[nx][ny][1] >= board[lx][ly][1] || haveSkill(lx, ly, 8)
+                    || (haveSkill(lx, ly, 13) && ltSkill[player]))
+                    && !haveSkill(lx, ly, 9)){
                     document.getElementById("go").innerHTML
                     += "<div class=\"go-kill\" onclick=\"go(" + lx + ", " + ly + ", "
                     + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
@@ -365,16 +430,17 @@
                 else srcXY += nam[boardXY[1]][boardXY[2]] + ".png"; 
                 document.getElementById("control-img").src = srcXY; 
                 document.getElementById("control-name").innerHTML = nameCN[boardXY[1]][boardXY[2]]; 
-                // if (document.getElementById("control").style.display = "none")
-                // document.getElementById("control").style.display = "inline";
-                // else document.getElementById("control").style.display = "none";
-                let pospls = 1; 
-                if (haveSkill(x, y, 1) || haveSkill(x, y, 5)) pospls = 2; 
-                document.getElementById("control").style.left = String(8 + (Number(y) + pospls) * 51) + "px"; 
-                document.getElementById("control").style.top = String(8 + (Number(x) + pospls) * 51) + "px"; 
-                if (haveSkill(x, y, 9) || haveSkill(x, y, 10)) for (let i = 0; i < boardXY[3]; i++)
-                document.getElementById("blood").innerHTML
-                += "<img src=\"../../img/bone.png\" style=\"width: 25px\">"; 
+                document.getElementById("control").style.left = "416px"; 
+                document.getElementById("control").style.top = String(8 + Number(x) * 51) + "px"; 
+                if (haveSkill(x, y, 9) || haveSkill(x, y, 10))
+                {
+                    for (let i = 0; i < boardXY[3]; i++)
+                    document.getElementById("blood").innerHTML
+                    += "<img src=\"../../img/bone.png\" style=\"width: 25px\">"; 
+                    for (let i = boardXY[3]; i < 2; i++)
+                    document.getElementById("blood").innerHTML
+                    += "<img src=\"../../img/bone-broken.png\" style=\"width: 25px\">"; 
+                }
                 else for (let i = 0; i < boardXY[3]; i++) document.getElementById("blood").innerHTML
                 += "<img src=\"../../img/heart.png\" style=\"width: 25px\">"; 
                 if (boardXY[5][0] == 1)
@@ -423,7 +489,7 @@
                 document.getElementById("skill").innerHTML = ""; 
                 for (let i = 0; i < skillXY.length; i++) document.getElementById("skill").innerHTML
                 += "<li>" + skillCN[skillXY[i]]
-                + ((skillCtrl[skillXY[i]] == 1 && boardXY[0] == player)
+                + ((skillCtrl[skillXY[i]] == 1 && boardXY[0] == player && !(haveSkill(x, y, 13) && ltSkill[player]))
                 ? "<button style=\"float: right\" onclick=\"skillGo(" + skillXY[i] + ", " + x + ", " + y
                 + ")\">ON</button>" : "")
                 + "</li>"; 
@@ -432,7 +498,8 @@
                     going = 2; 
                     let dx = [-1, 0, 1, 0, 1, 1, -1, -1], dy = [0, -1, 0, 1, 1, -1, 1, -1]; 
                     if (haveSkill(x, y, 1)) chooseWay(3, x, y, x, y); 
-                    else if (haveSkill(x, y, 5)) chooseWay(2, x, y, x, y); 
+                    else if (haveSkill(x, y, 5) || (haveSkill(x, y, 13) && ltSkill[boardXY[0]]))
+                        chooseWay(2, x, y, x, y); 
                     if (haveSkill(x, y, 7))
                     {
                         for (let d = 0; d < 4; d++)
@@ -466,7 +533,40 @@
                             + nx + "," + ny + "\"></div>"; 
                         }
                     }
-                    else chooseWay(1, x, y, x, y); 
+                    if (haveSkill(x, y, 14))
+                    {
+                        for (let d = 4; d < 8; d++)
+                        {
+                            let nx = Number(x) + Number(dx[d]), ny = Number(y) + Number(dy[d]); 
+                            while (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8)
+                            && board[nx][ny] == -1 && shown[nx][ny] != -1)
+                            {
+                                document.getElementById("go").innerHTML
+                                += "<div class=\"go-empty\" onclick=\"go(" + x + ", " + y + ", "
+                                + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\" id=\"go"
+                                + nx + "," + ny + "\"></div>"; 
+                                nx += Number(dx[d]), ny += Number(dy[d]); 
+                            }
+                            if (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8)
+                            && board[nx][ny] != -1 && board[nx][ny][5][0] == 1
+                            && shown[nx][ny] != -1 && board[nx][ny][1] >= board[x][y][1]
+                            && board[x][y][5][0] == 0)
+                            {
+                                document.getElementById("go").innerHTML
+                                += "<div class=\"go-ride\" onclick=\"go(" + x + ", " + y + ", "
+                                + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\"></div>"; 
+                                continue; 
+                            }
+                            if (!(nx < 0 || nx >= 8 || ny < 0 || ny >= 8) && board[nx][ny] != -1
+                            && shown[nx][ny] != -1 && board[x][y][1] <= board[nx][ny][1]
+                            && board[nx][ny][0] != player)
+                            document.getElementById("go").innerHTML
+                            += "<div class=\"go-kill\" onclick=\"go(" + x + ", " + y + ", "
+                            + nx + ", " + ny + ")\" style=\"" + pos(nx, ny) + "\" id=\"go"
+                            + nx + "," + ny + "\"></div>"; 
+                        }
+                    }
+                    chooseWay(1, x, y, x, y); 
                     let frozen = false; 
                     for (let d = 0; d < 8; d++)
                     {
@@ -570,6 +670,7 @@
                     }
                     attacking(1, x, y); 
                     findDead(); 
+                    alert("bone-explode.png", "Jason Explode One of His Clavicles")
                 }
                 if (skillNum == 12)
                 {
@@ -580,10 +681,16 @@
                         if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8) continue; 
                         if (board[nx][ny][0] != player || shown[nx][ny] == -1 || board[nx][ny] == -1) continue; 
                         if (haveSkill(nx, ny, 0) && Math.random() > 0.5) continue; 
-                        attacking(3, nx, ny); 
+                        attacking(2, nx, ny); 
                     }
                     attacking(2, x, y); 
                     findDead(); 
+                }
+                if (skillNum == 13)
+                {
+                    ltSkill[bxy[0]] = 4; 
+                    document.getElementById("piece"
+                    + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style.opacity = "0.5"; 
                 }
                 $("#showSkill").empty(); 
                 let qhy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 3)); 
@@ -604,6 +711,25 @@
                     effect[qx][qy] = 0; 
                 }
                 else effect[qx][qy] = -1; 
+                if (ltSkill[1 - player])
+                {
+                    let lt = document.getElementById("piece" + String(16 * Number(1 - player) + 2)); 
+                    lt.style.opacity = "0.5"; 
+                    let ltx = posB(lt)[0], lty = posB(lt)[1]; 
+                    ltSkill[1 - player]--; 
+                    if (ltSkill[1 - player] == 0)
+                    {
+                        attacking(20, ltx, lty); 
+                        findDead(); 
+                        if (board[ltx][lty] != -1)
+                        {
+                            attacking(20, ltx, lty); 
+                            findDead(); 
+                        }
+                    }
+                }
+                if (ltSkill[player])
+                    document.getElementById("piece" + String(16 * Number(player) + 2)).style.opacity = "0.5"; 
             }
             function attacking(dec, x, y) {
                 if (board[x][y][5].length > 1 && board[x][y][5][0] != 1)
@@ -720,7 +846,7 @@
                     if (nbxy[5][1] == 0 && nbxy[0] == player)
                     {
                         nbxy[5][1] = 1; 
-                        if (!haveSkill(x, y, 0))
+                        if (!haveSkill(x, y, 0) && !(haveSkill(x, y, 13) && ltSkill[1 - player]))
                         {
                             bxy[3]--; 
                             board[x][y] = bxy; 
@@ -744,104 +870,33 @@
                 }
                 else
                 {
-                    if (!(haveSkill(nx, ny, 0) && Math.floor(Math.random() * 11) % 2 == 1))
+                    if (!(haveSkill(nx, ny, 0) && Math.floor(Math.random() * 11) % 2 == 1)
+                    && !(haveSkill(nx, ny, 13) && ltSkill[player]))
                     {
                         let atk = attack[bxy[1]] + attackAddition; 
-                        if (haveSkill(nx, ny, 10)) atk = 1; 
+                        if (haveSkill(nx, ny, 10))
+                        {
+                            atk = 1; 
+                            alert("bone-broken.png", "A Clavicle is Broken!")
+                        }
                         let hurt = attacking(atk, nx, ny); 
-                        console.log(hurt); 
                         if (haveSkill(x, y, 11)) board[x][y][3] = min(10, bxy[3] + hurt); 
                     }
-                    if (!haveSkill(x, y, 0))
+                    if (!haveSkill(x, y, 0) && !(haveSkill(x, y, 13) && ltSkill[1 - player]))
                     {
                         attacking(1, x, y); 
                     }
-                    nbxy = board[nx][ny]; bxy = board[x][y]; 
-                    let canmove = false; 
-                    if (nbxy[5].length > 1 && nbxy[5][1][3] <= 0) {
-                        if (nbxy[5][1][0] == 0) document.getElementById("piece"
-                        + String(Number(nbxy[5][1][0]) * 16 + Number(nbxy[5][1][1]))).style = pos(killedi++, 9); 
-                        else document.getElementById("piece"
-                        + String(Number(nbxy[5][1][0]) * 16 + Number(nbxy[5][1][1]))).style = pos(killedii++, 10); 
-                        document.getElementById("piece"
-                        + String(Number(nbxy[5][1][0]) * 16 + Number(nbxy[5][1][1]))).style.display = "inline"; 
-                        if (killedi == 8)
-                        {
-                            alert("congratulations.png", "Blue Wins!"); 
-                        }
-                        else if (killedii == 8)
-                        {
-                            alert("congratulations.png", "Red Wins!"); 
-                        }
-                        document.getElementById("piece"
-                        + String(Number(nbxy[5][1][0]) * 16 + Number(nbxy[5][1][1]))).onclick = function () {}; 
-                        board[nx][ny][5].splice(1, 1); 
-                        board[nx][ny][4].splice(1, 1); 
-                    }
-                    if (bxy[5].length > 1 && bxy[5][1][3] <= 0) {
-                        if (bxy[5][1][0] == 0) document.getElementById("piece"
-                        + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).style = pos(killedi++, 9); 
-                        else document.getElementById("piece"
-                        + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).style = pos(killedii++, 10); 
-                        document.getElementById("piece"
-                        + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).style.display = "inline"; 
-                        if (killedi == 8)
-                        {
-                            alert("congratulations.png", "Blue Wins!"); 
-                        }
-                        else if (killedii == 8)
-                        {
-                            alert("congratulations.png", "Red Wins!"); 
-                        }
-                        document.getElementById("piece"
-                        + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).onclick = function () {}; 
-                        board[x][y][5].splice(1, 1); 
-                        board[x][y][4].splice(1, 1); 
-                    }
-                    if (nbxy[3] <= 0) {
-                        if (nbxy[0] == 0) document.getElementById("piece"
-                        + String(Number(nbxy[0]) * 16 + Number(nbxy[1]))).style = pos(killedi++, 9); 
-                        else document.getElementById("piece"
-                        + String(Number(nbxy[0]) * 16 + Number(nbxy[1]))).style = pos(killedii++, 10); 
-                        if (killedi == 8)
-                        {
-                            alert("congratulations.png", "Blue Wins!"); 
-                        }
-                        else if (killedii == 8)
-                        {
-                            alert("congratulations.png", "Red Wins!"); 
-                        }
-                        document.getElementById("piece"
-                        + String(Number(nbxy[0]) * 16 + Number(nbxy[1]))).onclick = function () {}; 
-                        document.getElementById("piece"
-                        + String(Number(bxy[0]) * 16 + Number(bxy[1]))).onclick = function() {
+                    findDead(); 
+                    if (board[x][y] != -1 && board[nx][ny] == -1)
+                    {
+                        document.getElementById("piece" + String(Number(board[x][y][0]) * 16
+                        + Number(board[x][y][1]))).style = pos(nx, ny); 
+                        document.getElementById("piece" + String(Number(board[x][y][0]) * 16
+                        + Number(board[x][y][1]))).onclick = function () {
                             control(nx, ny); 
                         }
-                        document.getElementById("piece"
-                        + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(nx, ny); 
-                        board[nx][ny] = -1; canmove = true; 
-                    }
-                    if (bxy[3] <= 0) {
-                        if (bxy[0] == 0) document.getElementById("piece"
-                        + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(killedi++, 9); 
-                        else document.getElementById("piece"
-                        + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(killedii++, 10); 
-                        if (killedi == 8)
-                        {
-                            alert("congratulations.png", "Blue Wins!"); 
-                        }
-                        else if (killedii == 8)
-                        {
-                            alert("congratulations.png", "Red Wins!"); 
-                        }
-                        document.getElementById("piece"
-                        + String(Number(bxy[0]) * 16 + Number(bxy[1]))).onclick = function () {}; 
-                        board[x][y] = -1; canmove = false; 
-                    }
-                    if (canmove)
-                    {
+                        board[nx][ny] = board[x][y]; 
                         board[x][y] = -1; 
-                        board[nx][ny] = bxy; 
                     }
                 }
                 $("#showSkill").empty(); 
@@ -863,6 +918,25 @@
                     effect[qx][qy] = 0; 
                 }
                 else effect[qx][qy] = -1; 
+                if (ltSkill[1 - player])
+                {
+                    let lt = document.getElementById("piece" + String(16 * Number(1 - player) + 2)); 
+                    lt.style.opacity = "0.5"; 
+                    let ltx = posB(lt)[0], lty = posB(lt)[1]; 
+                    ltSkill[1 - player]--; 
+                    if (ltSkill[1 - player] == 0)
+                    {
+                        attacking(20, ltx, lty); 
+                        findDead(); 
+                        if (board[ltx][lty] != -1)
+                        {
+                            attacking(20, ltx, lty); 
+                            findDead(); 
+                        }
+                    }
+                }
+                if (ltSkill[player])
+                    document.getElementById("piece" + String(16 * Number(player) + 2)).style.opacity = "0.5"; 
             }
             function giveUp() {
                 if (player == 0)
@@ -876,6 +950,9 @@
             }
             function alert(img, head, text="") {
                 document.getElementById("alert-img").src = "../../img/" + img; 
+                if (img == "bone-broken.png" || img == "bone-explode.png")
+                    document.getElementById("alert-img").style.height = "160px"; 
+                else document.getElementById("alert-img").style.height = "200px"; 
                 document.getElementById("alert-head").innerHTML = head; 
                 document.getElementById("alert-text").innerHTML = text; 
                 $("#alert").fadeIn(); 
@@ -935,22 +1012,24 @@
             <div id="horse-blood"></div><ul id="horse-skill"
             style="overflow-y: scroll; max-height: 40px; margin-top: -5px;"></ul></div>
         </div>
-        <div class="button" onclick="location = '../'" style="position: absolute; bottom: 5px; left: 8px;">
+        <div class="button" onclick="location = '../'" style="position: absolute; bottom: 5px; left: 8px;" title="Home">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/home_black_24dp.png">
         </div>
-        <div class="button" onclick="giveUp()" style="position: absolute; bottom: 5px; left: 56px;">
+        <div class="button" onclick="giveUp()" style="position: absolute; bottom: 5px; left: 56px;" title="Give up">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/flag_black_24dp.png">
         </div>
-        <div class="button" onclick="
-        alert('notice.png', 'Notice'
-        , '<b>Do NOT find me on QQ. </b>If you want to find me, '
-        + 'please email me at maxyellowyu@gmail.com or mx3200494857@163.com')"
-        style="position: absolute; bottom: 5px; left: 104px;">
+        <div class="button" onclick="$('#notice').slideToggle()"
+        style="position: absolute; bottom: 5px; left: 104px;" title="Notice Board">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/warning_black_24dp.png">
         </div>
-        <div class="button" onclick="
+        <div class="button" title="About" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.3' 
+        + '<ul><li>Add broken clavicle & exploding clavicle</li><li>Add skill to LT & HYK</li>'
+        + '<li>HYK can be ridden</li></ul></small>'
+        + '<hr><small>Version 1.1.2.2'
+        + '<ul><li>Change WYX\'s blood as clavicle</li></ul></small>'
         + '<hr><small>Version 1.1.2.1'
         + '<ul><li>Fix two bugs</li><li>Add skill to MBJ</li></ul></small>'
         + '<hr><small>Version 1.1.2'
@@ -990,5 +1069,18 @@
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/close_black_24dp.png">
             </div>
         </div>
+        <div><ul class="menu-box box" id="notice">
+            <li class="menu-item" onclick="alert('notice.png', 'Communicate with Me', 
+            '<b>Do NOT find me on QQ. </b>If you want to find me, '
+            + 'please email me at maxyellowyu@gmail.com or mx3200494857@163.com')">Communicate with Me
+            <span>TOP</span></li>
+            <li class="menu-item" onclick="alert('notice.png', 'Give Me Some Advice', 
+            'If you have some good ideas about the skills of the ones '
+            + 'who haven\'t had a skill yet, you can email me at maxyellowyu@gmail.com')">Give Me Some Advice</li>
+            <li class="devider"></li>
+            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.3', 
+            '<ul><li>Add broken clavicle & exploding clavicle</li><li>Add skill to LT & HYK</li>'
+            + '<li>HYK can be ridden</li></ul>')">Version 1.1.3</li>
+        </ul></div>
     </body>
 </html>
