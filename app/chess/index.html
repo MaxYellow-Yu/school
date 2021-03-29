@@ -241,7 +241,7 @@
             var skillCN = ["金刚不坏：当受到攻击时，有50%的概率闪避；自己攻击不会受到伤害。", "箭步如飞：速度为3。", 
             "神威大炮：可以隔着一枚棋子远程攻打另一枚，伤害为13。", "瞄准张田：无视任何屏障直接对场内敌方张田泽宇进行攻击。", 
             "自习没了：任意一次操作后，50%的概率周围相邻的敌方棋子被罚自习，无法移动。", "迅捷小猴：速度为2。", 
-            "跳跃皮球：跳过若干棋子或未翻开的格子。", "狡诈司机：可以开车。", "初生小猴：可以攻击场内所有角色。", 
+            "跳跃皮球：跳过若干棋子或未翻开的格子。被攻击后后退1格。", "狡诈司机：可以开车。", "初生小猴：可以攻击场内所有角色。", 
             "锁骨之术：无法进行正常攻击。可以减少一根锁骨使距离为1的棋子减少3点血，距离为2的减少1点血。", 
             "锁骨御敌：每次受到攻击仅减少1点血。", "越吃越胖：攻击造成其他棋子几点伤害，自己增加几点血量。上限10点。", 
             "天降龟壳：触发本技能，自己减2血，周围8格内所有敌方棋子受到2点伤害。", 
@@ -665,7 +665,8 @@
                     {
                         let atk = attackJason[k]; 
                         if (haveSkill(dis[k][i][0], dis[k][i][1], 10)) atk = 1; 
-                        if (!haveSkill(dis[k][i][0], dis[k][i][1], 0) || Math.random() > 0.5)
+                        if ((!haveSkill(dis[k][i][0], dis[k][i][1], 0) || Math.random() > 0.5)
+                        && !(haveSkill(dis[k][i][0], dis[k][i][1], 13) && ltSkill[player]))
                         attacking(atk, dis[k][i][0], dis[k][i][1]); 
                     }
                     attacking(1, x, y); 
@@ -680,7 +681,8 @@
                         let nx = Number(x) + Number(dx[d]), ny = Number(y) + Number(dy[d]); 
                         if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8) continue; 
                         if (board[nx][ny][0] != player || shown[nx][ny] == -1 || board[nx][ny] == -1) continue; 
-                        if (haveSkill(nx, ny, 0) && Math.random() > 0.5) continue; 
+                        if ((haveSkill(nx, ny, 0) && Math.random() > 0.5)
+                        && !(haveSkill(dis[k][i][0], dis[k][i][1], 13) && ltSkill[player])) continue; 
                         attacking(2, nx, ny); 
                     }
                     attacking(2, x, y); 
@@ -898,6 +900,28 @@
                         board[nx][ny] = board[x][y]; 
                         board[x][y] = -1; 
                     }
+                    if (haveSkill(nx, ny, 6) && board[nx][ny] != -1)
+                    {
+                        let plx = 0, ply = 0; 
+                        if (nx > x && nx - x > Math.abs(ny - y)) plx = 1; 
+                        if (nx < x && x - nx > Math.abs(y - ny)) plx = -1; 
+                        if (ny > y && ny - y > Math.abs(nx - x)) ply = 1; 
+                        if (ny < y && y - ny > Math.abs(x - nx)) ply = -1; 
+                        if (!(nx + plx >= 8 || nx + plx < 0 || ny + ply >= 8 || ny + ply < 0
+                        || shown[nx + plx][ny + ply] == -1 || board[nx + plx][ny + ply] != -1))
+                        {
+                            nbxy = board[nx][ny]; 
+                            board[nx][ny] = -1; 
+                            nx += plx, ny += ply; 
+                            board[nx][ny] = nbxy; 
+                            document.getElementById("piece" + String(Number(board[nx][ny][0]) * 16
+                            + Number(board[nx][ny][1]))).style = pos(nx, ny); 
+                            document.getElementById("piece" + String(Number(board[nx][ny][0]) * 16
+                            + Number(board[nx][ny][1]))).onclick = function () {
+                                control(nx, ny); 
+                            }
+                        }
+                    }
                 }
                 $("#showSkill").empty(); 
                 let qhy = document.getElementById("piece" + String(16 * (1 - Number(player)) + 3)); 
@@ -1025,6 +1049,8 @@
         <div class="button" title="About" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.3.1' 
+        + '<ul><li>Add KPQ\'s skill</li><li>Fix a bug of LT\'s skill</li></ul></small>'
         + '<hr><small>Version 1.1.3' 
         + '<ul><li>Add broken clavicle & exploding clavicle</li><li>Add skill to LT & HYK</li>'
         + '<li>HYK can be ridden</li></ul></small>'
@@ -1080,7 +1106,8 @@
             <li class="devider"></li>
             <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.3', 
             '<ul><li>Add broken clavicle & exploding clavicle</li><li>Add skill to LT & HYK</li>'
-            + '<li>HYK can be ridden</li></ul>')">Version 1.1.3</li>
+            + '<li>HYK can be ridden</li><li>Add KPQ\'s skill</li><li>Fix a bug of LT\'s skill</li></ul>')">
+            Version 1.1.3</li>
         </ul></div>
     </body>
 </html>
