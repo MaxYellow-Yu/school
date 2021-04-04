@@ -224,10 +224,10 @@
                 [[0], [1]], 
                 [[11], [9, 10]], 
                 [
-                    [13], [], 
+                    [13], [16], 
                     [2, 3]
                 ], 
-                [[], [], [], [4], []], 
+                [[], [], [17], [4], []], 
                 [[12], [6], [7], [14]], 
                 [[]], [[15]], [[5, 8]]
             ]; 
@@ -246,8 +246,9 @@
             "锁骨御敌：每次受到攻击仅减少1点血。", "越吃越胖：攻击造成其他棋子几点伤害，自己增加几点血量。上限10点。", 
             "天降龟壳：触发本技能，自己减2血，周围8格内所有敌方棋子受到2点伤害。", 
             "飘飘所似：触发本技能进入量子态，免疫任何伤害，可以攻击任何棋子，速度为2。三回合后死亡。", 
-            "不太正经：斜向开车", "耗子尾汁：同学，我汤姆劝你耗子尾汁，好好反思。"]; 
-            var skillCtrl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0]; 
+            "不太正经：斜向开车", "耗子尾汁：同学，我汤姆劝你耗子尾汁，好好反思。", "生无可恋：死后随机带走一名敌方棋子。", 
+            "道貌岸然：随机拥有一种未知技能。"]; 
+            var skillCtrl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0]; 
             var blood = [[4, 4], [4, 2], [4, 4, 4], [3, 1, 4, 4, 6], [4, 4, 4, 4], [3], [4], [1]]; 
             var attack = [4, 3, 3, 2, 2, 1, 1, 1]; 
             var player = 0; 
@@ -255,6 +256,7 @@
             var killedi = 0, killedii = 0; 
             // Skill Parameters
             var ltSkill = [0, 0]; 
+            var xrySkill = [-1, -1]; 
             window.onload = function() {
                 $("#board tr td").addClass("hide"); 
                 for (let i = 0; i < 8; i++)
@@ -271,6 +273,11 @@
                     + "\" style=\"" + pos(xI, yI) + "display: none;\" onclick=\"control(" + xI + ", " + yI
                     + ")\">" + nameI + "</div>"; 
                     board[xI][yI] = [0, i, nameINum, blood[i][nameINum], [skill[i][nameINum]], ride]; 
+                    if (haveSkill(xI, yI, 17))
+                    {
+                        xrySkill[0] = Math.floor(Math.random() * 997) % skillCN.length; 
+                        board[xI][yI][4][0].push(xrySkill[0]); 
+                    }
                 }
                 for (let i = 0; i < 8; i++)
                 {
@@ -286,6 +293,11 @@
                     + "\" style=\"" + pos(xI, yI) + "display: none;\" onclick=\"control(" + xI + ", " + yI
                     + ")\">" + nameI + "</div>"; 
                     board[xI][yI] = [1, i, nameINum, blood[i][nameINum], [skill[i][nameINum]], ride]; 
+                    if (haveSkill(xI, yI, 17))
+                    {
+                        xrySkill[1] = Math.floor(Math.random() * 997) % skillCN.length; 
+                        board[xI][yI][4][0].push(xrySkill[1]); 
+                    }
                 }
                 for (let i = 0; i < 8; i++)
                 {
@@ -487,12 +499,16 @@
                     }
                 }
                 document.getElementById("skill").innerHTML = ""; 
-                for (let i = 0; i < skillXY.length; i++) document.getElementById("skill").innerHTML
-                += "<li>" + skillCN[skillXY[i]]
-                + ((skillCtrl[skillXY[i]] == 1 && boardXY[0] == player && !(haveSkill(x, y, 13) && ltSkill[player]))
-                ? "<button style=\"float: right\" onclick=\"skillGo(" + skillXY[i] + ", " + x + ", " + y
-                + ")\">ON</button>" : "")
-                + "</li>"; 
+                for (let i = 0; i < skillXY.length; i++)
+                {
+                    document.getElementById("skill").innerHTML
+                    += "<li>" + skillCN[skillXY[i]]
+                    + ((skillCtrl[skillXY[i]] == 1 && boardXY[0] == player && !(haveSkill(x, y, 13) && ltSkill[player]))
+                    ? "<button style=\"float: right\" onclick=\"skillGo(" + skillXY[i] + ", " + x + ", " + y
+                    + ")\">ON</button>" : "")
+                    + "</li>"; 
+                    if (skillXY[i] == 17) break; 
+                }
                 if (player == boardXY[0] && going == 0)
                 {
                     going = 2; 
@@ -745,12 +761,42 @@
                 return res; 
             }
             function findDead() {
+                let findAgain = false; 
                 for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++)
                 {
                     if (board[i][j] == -1) continue; 
                     if (board[i][j][3] <= 0)
                     {
                         let bxy = board[i][j]; 
+                        if (haveSkill(i, j, 16))
+                        {
+                            let used = [0, 0, 0, 0, 0, 0, 0, 0]; 
+                            while (1)
+                            {
+                                let knum = Math.floor(Math.random() * 17) % 8; 
+                                if (used[knum] == 1)
+                                {
+                                    let notCom = false; 
+                                    for (let i = 0; i < 8; i++) if (used[i] == 0)
+                                    {
+                                        notCom = true; 
+                                        break; 
+                                    }
+                                    if (!notCom) break; 
+                                    else continue; 
+                                }
+                                used[knum] = 1; 
+                                let kitm = document.getElementById("piece"
+                                + String((1 - Number(bxy[0])) * 16 + Number(knum))); 
+                                let kx = posB(kitm)[0], ky = posB(kitm)[1]; 
+                                if (ky <= 8 && shown[kx][ky] != -1)
+                                {
+                                    attacking(20, kx, ky); 
+                                    findAgain = true; 
+                                    break; 
+                                }
+                            }
+                        }
                         if (bxy[5].length > 1 && bxy[5][0] != 1) {
                             if (bxy[5][1][0] == 0) document.getElementById("piece"
                             + String(Number(bxy[5][1][0]) * 16 + Number(bxy[5][1][1]))).style = pos(killedi++, 9); 
@@ -810,6 +856,8 @@
                         board[i][j][4].splice(1, 1); 
                     }
                 }
+
+                if (findAgain) findDead(); 
             }
             function go(x, y, nx, ny, attackAddition = 0) {
                 let bxy = board[x][y], nbxy = board[nx][ny]; 
@@ -1049,6 +1097,8 @@
         <div class="button" title="About" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.4' 
+        + '<ul><li>Add skill to QJH & XRY</li></ul></small>'
         + '<hr><small>Version 1.1.3.1' 
         + '<ul><li>Add KPQ\'s skill</li><li>Fix a bug of LT\'s skill</li></ul></small>'
         + '<hr><small>Version 1.1.3' 
@@ -1072,7 +1122,8 @@
         + '<li>Beautify the pop-up window</li><li>Add CSH to chess</li><li>Move WYX to the 3rd level</li>'
         + '<li>Add skill to CYB & YBJ & QHY & CSH</li></ul></small>'
         + '<hr><small>Version 1.0'
-        + '<ul><li>Create the game. </li></ul></small>')"
+        + '<ul><li>Create the game. </li></ul></small>'
+        + '<hr><small>Copyright (c) 2021 Max Yellow. All rights reserved.</small>')"
         style="position: absolute; bottom: 5px; left: 152px;">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/help_black_24dp.png">
         </div>
@@ -1104,10 +1155,9 @@
             'If you have some good ideas about the skills of the ones '
             + 'who haven\'t had a skill yet, you can email me at maxyellowyu@gmail.com')">Give Me Some Advice</li>
             <li class="devider"></li>
-            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.3', 
-            '<ul><li>Add broken clavicle & exploding clavicle</li><li>Add skill to LT & HYK</li>'
-            + '<li>HYK can be ridden</li><li>Add KPQ\'s skill</li><li>Fix a bug of LT\'s skill</li></ul>')">
-            Version 1.1.3</li>
+            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.4', 
+            '<ul><li>Add skill to QJH & XRY</li></ul>')">
+            Version 1.1.4</li>
         </ul></div>
     </body>
 </html>
