@@ -257,6 +257,13 @@
             // Skill Parameters
             var ltSkill = [0, 0]; 
             var xrySkill = [-1, -1]; 
+            // Fake 404 Not Found
+            var innerhtmlr; 
+            function retrieve(password) {
+                if (password != "jason") return; 
+                document.body.innerHTML = innerhtmlr; 
+            }
+            //Functions
             window.onload = function() {
                 $("#board tr td").addClass("hide"); 
                 for (let i = 0; i < 8; i++)
@@ -305,6 +312,8 @@
                     document.body.innerHTML += "<div class=\"piece instr\" style=\""
                     + pos(i, j + 12) + "\">" + nam[i][j] + "</div>"; 
                 }
+                innerhtmlr = document.body.innerHTML; 
+                document.body.innerHTML = "<h1>404 Not Found</h1>"; 
             }
             function showPiece(x, y, t) {
                 $("#go").empty(); 
@@ -1148,7 +1157,7 @@
         </div>
         <div><ul class="menu-box box" id="notice">
             <li class="menu-item" onclick="alert('notice.png', 'Communicate with Me', 
-            '<b>Do NOT find me on QQ. </b>If you want to find me, '
+            '<b>Do NOT look for me on QQ. </b>If you want to find me, '
             + 'please email me at maxyellowyu@gmail.com or mx3200494857@163.com')">Communicate with Me
             <span>TOP</span></li>
             <li class="menu-item" onclick="alert('notice.png', 'Give Me Some Advice', 
