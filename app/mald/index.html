@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Random</title>
+        <link rel="shortcut icon" href="../../img/g.ico" type="image/x-icon">
+        <script>
+            var src = ["zcx-2.png", "csh.png", "hyk.png", "kpq.png", "lt-2.png", "qjh.png", "qhy-2.png", 
+            "sbw-2.png", "wyx-2.png", "yzh-2.png", "yxd.png", "zjx-2.png"]; 
+            window.onload = rand; 
+            function rand() {
+                document.getElementById("photo").src = "../../img/"
+                + src[Math.floor(Math.random() * 100) % src.length]; 
+            }
+            
+        </script>
+        <style>
+            .button {
+                border-radius: 50%; 
+                display: inline-block; 
+                margin: 0 4px; 
+                padding: 12px;
+                overflow: hidden; 
+                vertical-align: middle; 
+                cursor: pointer; 
+                height: 24px; 
+                width: 24px; 
+                flex: 0 0 auto; 
+                white-space: nowrap; 
+                font: 13px/27px Roboto,RobotoDraft,Arial,sans-serif; 
+                z-index: 986;
+            }
+            .button:hover {
+                background: #eaeaea !important;
+            }
+            .word {
+                color: #0080cc; 
+            }
+        </style>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <div style="font-size: 10px; height: 550px; overflow-y: scroll;">
+            <b class="word" style="font-size: 15px" id="allen">allen</b>&emsp; /ˈælən/<br>
+            <b>noun</b><br>
+            Ball. 皮球。<br><br>
+    
+            <img style="height: 13px;" src="../../img/knowledge-key.png">
+            <b class="word" style="font-size: 18px" id="cal">cal</b>&emsp; /kæl/<br>
+            <b>pron.</b><br>
+            I. 我。<br><br>
+            <img style="height: 13px;" src="../../img/knowledge-key.png">
+            <b class="word" style="font-size: 18px" id="calley">calley</b>&emsp; /ˈkælɪ/<br>
+            <b>pron.</b><br>
+            You. 你。<br><br>
+            <img style="height: 13px;" src="../../img/knowledge-key.png">
+            <b class="word" style="font-size: 18px" id="calleymar">calleymar</b>&emsp; /ˈkælɪmɑ:/<br>
+            <b>pron.</b><br>
+            He. 他。<br><br>
+    
+            <img style="height: 13px;" src="../../img/knowledge-key.png">
+            <b class="word" style="font-size: 18px" id="jason">jason</b>&emsp; /ˈdʒeɪsən/<br>
+            <b>noun</b><br>
+            1. shit. 狗屎。&ensp;<b class="word">a piece of jason</b>&ensp;一坨狗屎&emsp; 
+            2. idiot, fool, fucker. 笨蛋，傻瓜。Three Jasons<i>&ensp;is a good film in India. </i>《三傻》在印度是一部好电影。
+            <br>
+            <b>verb</b><br>
+            1. fuck. 艹。&emsp; 
+            2. be. 是。
+            <br>
+            <b>excl.</b><br>
+            1. fuck. 他妈的。(=<b class="word">jack</b>)&emsp;
+            2. shit. 狗屎。(=<b class="word">jit</b>)
+            <br>
+            <b>number</b><br>
+            1. jason constant. 杰森常数（=4.1×10<sup>670</sup>）。
+            <b class="word">a jason of wives</b>&ensp; 一杰森妻子，4.1×10<sup>670</sup>位妻子&emsp;
+            2. the number of w(22). w(22)函数的值。
+            3. a lot, not a little. 很多很多。 <i>a jason of jason</i>&ensp;很多狗屎<br><br>
+    
+            <img style="height: 13px;" src="../../img/knowledge-key.png">
+            <b class="word" style="font-size: 18px" id="ken">ken</b>&emsp; /ken/<br>
+            <b>noun</b><br>
+            1. shit. 狗屎。&ensp;<b class="word">a piece of ken</b>&ensp;一坨狗屎&emsp; 
+            2. idiot, fool, fucker. 笨蛋，傻瓜。Three Kens<i>&ensp;is a good film in India. </i>《三傻》在印度是一部好电影。
+            <br>
+            <b>verb</b><br>
+            fuck. 艹。
+            <br>
+            <b>excl.</b><br>
+            1. fuck. 他妈的。&emsp;
+            2. shit. 狗屎。<br><br>
+
+            <b class="word" style="font-size: 15px" id="lawy">lawy</b>&emsp; /ˈleɪwi/<br>
+            <b>noun</b><br>
+            That teacher. 某一位老师。<br>
+            <b>adj.</b><br>
+            Difficult, not easy. 困难的。<br><br>
+    
+            <img style="height: 13px;" src="../../img/knowledge-key.png">
+            <b class="word" style="font-size: 18px" id="wanque">wanque</b>&emsp; /wæŋk/<br>
+            <b>noun</b><br>
+            That teacher. 某一位老师。<br><br><br><br><br>    
+        </div> 
+        <div id="search" style="
+            border: 1px solid whitesmoke;
+            position: absolute;
+            bottom: 55px;
+            left: 110px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: block;
+            border-bottom-left-radius: 0px;
+            background: whitesmoke;
+            display: none;">
+            <input onkeypress="if (event.keyCode == 13) location = './#' + this.value;">
+        </div>
+        <div class="button" onclick="location = '../'"
+        style="position: fixed; bottom: 5px; left: 8px; background: white;">
+            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/home_black_24dp.png">
+        </div>
+        <div class="button" onclick="
+            $('#search').fadeToggle(); 
+            if (this.style.background == 'white') this.style.background = 'whitesmoke'; 
+            else this.style.background = 'white';"
+        style="position: fixed; bottom: 5px; left: 56px; background: white;">
+            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/search_black_24dp.png">
+        </div>
+    </body>
+</html>

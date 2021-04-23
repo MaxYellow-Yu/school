@@ -36,6 +36,12 @@
                 padding:2px;
                 border-radius: 5px;
             }
+            .tablep {
+                text-align: center; 
+                border-collapse: collapse; 
+                padding:2px;
+                border-radius: 5px;
+            }
             .hide {
                 background: #eaeaea;
                 cursor: pointer;
@@ -1135,6 +1141,10 @@
         style="position: absolute; bottom: 5px; left: 152px;">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/help_black_24dp.png">
         </div>
+        <div class="button" onclick="$('#ct').slideToggle()"
+        style="position: absolute; bottom: 5px; left: 200px;" title="Chess Tournament">
+            <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/trophy_black_24dp.png">
+        </div>
         <div class="button"
         style="position: absolute; bottom: 5px; right: 8px; cursor: auto;">
             <div style="background: red; width: 20px; height: 20px;
@@ -1163,13 +1173,42 @@
             'If you have some good ideas about the skills of the ones '
             + 'who haven\'t had a skill yet, you can email me at maxyellowyu@gmail.com')">Give Me Some Advice</li>
             <li class="devider"></li>
-            <li class="menu-item" onclick="alert('notice.png', 'Notice', 
+            <!-- <li class="menu-item" onclick="alert('notice.png', 'Notice', 
             'The game will not be updated next week if there are no bugs. ')">Notice
             <span style="color: pink; border-color: pink;">NEW</span></li>
-            <li class="devider"></li>
+            <li class="devider"></li> -->
             <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.5', 
             '<ul><li>Add skill to FYH</li><li>Change MBJ\'s skill</li></ul>')">
-            Version 1.1.5 <span style="color: pink; border-color: pink;">NEW</span></li>
+            Version 1.1.5</li>
+            <li class="devider"></li>
+            <li class="menu-item" onclick="alert('trophy.png', '1st Chess Tournament', 
+            '1st Chess Tournament has started right now. 1st Race have finished and YBJ won in the race. '
+            + '2nd and 3rd Race will be held in ZXF\'s class on Sunday and Tuesday. ')">
+            1st Chess Tournament
+            <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="menu-item" onclick="alert('trophy.png', '1st Race', 
+            '<table class=\'tablep\' style=\'padding: 0 0 0 0px;\'>'
+            + '<tr><th>Participant</th><td>YBJ</td><td>ZQL</td><td>XRY</td></tr>'
+            + '<tr><th>1st Round</th><td>2</td><td>1</td><td>0</td></tr>'
+            + '<tr><th>2nd Round</th><td>1</td><td>0</td><td>1</td></tr>'
+            + '<tr><th>In Total</th><td>3</td><td>1</td><td>1</td></tr>'
+            + '</table>')">1st Race
+            <span style="color: pink; border-color: pink;">NEW</span></li>
+        </ul></div>
+        <div><ul class="menu-box box" id="ct" style="left: 206px;">
+            <li class="menu-item" onclick="alert('trophy.png', '1st Chess Tournament', 
+            '1st Chess Tournament has started right now. 1st Race have finished and YBJ won in the race. '
+            + '2nd and 3rd Race will be held in ZXF\'s class on Sunday and Tuesday. ')">
+            1st Chess Tournament
+            <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="menu-item" onclick="alert('trophy.png', '1st Race', 
+            '<table class=\'tablep\' style=\'padding: 0 0 0 0px;\'>'
+            + '<tr><th>Participant</th><td>YBJ</td><td>ZQL</td><td>XRY</td></tr>'
+            + '<tr><th>1st Round</th><td>2</td><td>1</td><td>0</td></tr>'
+            + '<tr><th>2nd Round</th><td>1</td><td>0</td><td>1</td></tr>'
+            + '<tr><th>In Total</th><td>3</td><td>1</td><td>1</td></tr>'
+            + '</table>')">1st Race
+            <span style="color: pink; border-color: pink;">NEW</span></li>
         </ul></div>
     </body>
 </html>
