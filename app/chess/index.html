@@ -167,6 +167,11 @@
             .button:hover {
                 background: #eaeaea;
             }
+
+            .yxdSkill:hover {
+                opacity: 0.5;
+                cursor: pointer;
+            }
 /* 
             @keyframes rotateGreen {
                 from {
@@ -180,7 +185,9 @@
             } */
         </style>
         <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-        <script src="index.js"></script>
+        <script>
+            
+        </script>
     </head>
     <body>
         <table class="table">
@@ -256,6 +263,8 @@
         <div class="button" title="About" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.8' 
+        + '<ul><li>Add skill to YXD</li></ul></small>'
         + '<hr><small>Version 1.1.7' 
         + '<ul><li>Slightly change LT & FYH\'s skill</li><li>Fix some of ZCX\'s bug</li></ul></small>'
         + '<hr><small>Version 1.1.6' 
@@ -333,18 +342,9 @@
             'The game will not be updated next week if there are no bugs. ')">Notice
             <span style="color: pink; border-color: pink;">NEW</span></li>
             <li class="devider"></li> -->
-            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.7', 
-            '<ul><li>Slightly change LT & FYH\'s skill</li><li>Fix some of ZCX\'s bug</li></ul>')">
-            Version 1.1.7 <span style="color: pink; border-color: pink;">NEW</span></li>
-            <li class="devider"></li>
-            <li class="menu-item" onclick="alert('trophy.png',
-            '2nd Chess Tournament<h6 style=\'margin-top: 10px; \'>Race of Bugs</h6>', 
-            '2nd Chess Tournament took place on 2021/5/4 in the classroom. LT won the first prize, followed by QHY. '
-            + 'It is surprizing that KYL, the winner of the 1st Chess Tournament, came last in the tournament. '
-            + 'There are a lot of bugs of version 1.1.6, so that is why this tournament is also called Race of Bugs. '
-            + '</table>')">
-            2nd Chess Tournament
-            <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.8', 
+            '<ul><li>Add skill to YXD</li></ul>')">
+            Version 1.1.8 <span style="color: pink; border-color: pink;">NEW</span></li>
         </ul></div>
         <div><ul class="menu-box box" id="ct" style="left: 206px;">
             <li class="menu-item" onclick="alert('trophy.png',
@@ -353,8 +353,7 @@
             + 'It is surprizing that KYL, the winner of the 1st Chess Tournament, came last in the tournament. '
             + 'There are a lot of bugs of version 1.1.6, so that is why this tournament is also called Race of Bugs. '
             + '</table>')">
-            2nd Chess Tournament
-            <span style="color: pink; border-color: pink;">NEW</span></li>
+            2nd Chess Tournament</li>
             <li class="devider"></li>
             <li class="menu-item" onclick="alert('trophy.png', '1st Chess Tournament', 
             '1st Chess Tournament has been over now. Here is the result. '
