@@ -172,6 +172,11 @@
                 opacity: 0.5;
                 cursor: pointer;
             }
+            
+            @font-face {
+                font-family: Cuprum;
+                src: url(../src/font/Cuprum.ttf);
+            }
 /* 
             @keyframes rotateGreen {
                 from {
@@ -242,8 +247,11 @@
         </div>
         <div class="box" id="settings"
         style="position: absolute; left: 500px; top: 59px; padding: 20px 20px 10px 20px; 
-        width: 370px; height: 210px; display: none;">
-            <button onclick="location = './1.0.html'">Version 1.0</button>
+        width: 370px; height: 210px; display: none; font-family: Cuprum;">
+            Version 1.0
+            <div class="button" onclick="location = './1.0.html'" style="width: 20px; height: 20px;">
+                <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_black_20dp.png">
+            </div>
             <div class="button" onclick="$('#settings').fadeOut()" style="position: absolute; left: 20px; bottom: 20px;">
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/close_black_24dp.png">
             </div>
@@ -261,6 +269,8 @@
         <div class="button" title="About" onclick="
         alert('instruction.png', 'About . . .'
         , 'The higher level pieces can eat the lower ones. '
+        + '<hr><small>Version 1.1.9' 
+        + '<ul><li>Fix a bug of YXD</li></ul></small>'
         + '<hr><small>Version 1.1.8' 
         + '<ul><li>Add skill to YXD</li></ul></small>'
         + '<hr><small>Version 1.1.7' 
@@ -340,9 +350,9 @@
             'The game will not be updated next week if there are no bugs. ')">Notice
             <span style="color: pink; border-color: pink;">NEW</span></li>
             <li class="devider"></li> -->
-            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.8', 
-            '<ul><li>Add skill to YXD</li></ul>')">
-            Version 1.1.8 <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="menu-item" onclick="alert('instruction.png', 'Version 1.1.9', 
+            '<ul><li>Fix a bug of YXD</li></ul>')">
+            Version 1.1.9 <span style="color: pink; border-color: pink;">NEW</span></li>
         </ul></div>
         <div><ul class="menu-box box" id="ct" style="left: 206px;">
             <li class="menu-item" onclick="alert('trophy.png',
