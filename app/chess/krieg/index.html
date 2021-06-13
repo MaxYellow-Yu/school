@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-        <title>Chess</title>
+        <title>Kriegspiel Chess</title>
         <style>
             .greenname {
                 background: #82ca13;
@@ -46,6 +46,12 @@
             .hide {
                 background: #eaeaea;
                 cursor: pointer;
+            }
+            .redH {
+                background: rgba(255, 0, 0, 0.2);
+            }
+            .blueH {
+                background: rgba(0, 0, 255, 0.2);
             }
 
             .go-empty {
@@ -175,7 +181,7 @@
             
             @font-face {
                 font-family: Cuprum;
-                src: url(../src/font/Cuprum.ttf);
+                src: url(../../src/font/Cuprum.ttf);
             }
 /* 
             @keyframes rotateGreen {
@@ -195,38 +201,16 @@
     <body>
         <table class="table">
             <tbody id="board">
-                <tr><td onclick="showPiece(0, 0, this)"></td><td onclick="showPiece(0, 1, this)"></td>
-                    <td onclick="showPiece(0, 2, this)"></td><td onclick="showPiece(0, 3, this)"></td>
-                    <td onclick="showPiece(0, 4, this)"></td><td onclick="showPiece(0, 5, this)"></td>
-                    <td onclick="showPiece(0, 6, this)"></td><td onclick="showPiece(0, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(1, 0, this)"></td><td onclick="showPiece(1, 1, this)"></td>
-                    <td onclick="showPiece(1, 2, this)"></td><td onclick="showPiece(1, 3, this)"></td>
-                    <td onclick="showPiece(1, 4, this)"></td><td onclick="showPiece(1, 5, this)"></td>
-                    <td onclick="showPiece(1, 6, this)"></td><td onclick="showPiece(1, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(2, 0, this)"></td><td onclick="showPiece(2, 1, this)"></td>
-                    <td onclick="showPiece(2, 2, this)"></td><td onclick="showPiece(2, 3, this)"></td>
-                    <td onclick="showPiece(2, 4, this)"></td><td onclick="showPiece(2, 5, this)"></td>
-                    <td onclick="showPiece(2, 6, this)"></td><td onclick="showPiece(2, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(3, 0, this)"></td><td onclick="showPiece(3, 1, this)"></td>
-                    <td onclick="showPiece(3, 2, this)"></td><td onclick="showPiece(3, 3, this)"></td>
-                    <td onclick="showPiece(3, 4, this)"></td><td onclick="showPiece(3, 5, this)"></td>
-                    <td onclick="showPiece(3, 6, this)"></td><td onclick="showPiece(3, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(4, 0, this)"></td><td onclick="showPiece(4, 1, this)"></td>
-                    <td onclick="showPiece(4, 2, this)"></td><td onclick="showPiece(4, 3, this)"></td>
-                    <td onclick="showPiece(4, 4, this)"></td><td onclick="showPiece(4, 5, this)"></td>
-                    <td onclick="showPiece(4, 6, this)"></td><td onclick="showPiece(4, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(5, 0, this)"></td><td onclick="showPiece(5, 1, this)"></td>
-                    <td onclick="showPiece(5, 2, this)"></td><td onclick="showPiece(5, 3, this)"></td>
-                    <td onclick="showPiece(5, 4, this)"></td><td onclick="showPiece(5, 5, this)"></td>
-                    <td onclick="showPiece(5, 6, this)"></td><td onclick="showPiece(5, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(6, 0, this)"></td><td onclick="showPiece(6, 1, this)"></td>
-                    <td onclick="showPiece(6, 2, this)"></td><td onclick="showPiece(6, 3, this)"></td>
-                    <td onclick="showPiece(6, 4, this)"></td><td onclick="showPiece(6, 5, this)"></td>
-                    <td onclick="showPiece(6, 6, this)"></td><td onclick="showPiece(6, 7, this)"></td></tr>
-                <tr><td onclick="showPiece(7, 0, this)"></td><td onclick="showPiece(7, 1, this)"></td>
-                    <td onclick="showPiece(7, 2, this)"></td><td onclick="showPiece(7, 3, this)"></td>
-                    <td onclick="showPiece(7, 4, this)"></td><td onclick="showPiece(7, 5, this)"></td>
-                    <td onclick="showPiece(7, 6, this)"></td><td onclick="showPiece(7, 7, this)"></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td id="H30" class="redH"></td><td id="H31" class="redH"></td><td></td><td></td>
+                <td></td><td></td><td id="H36" class="blueH"></td><td id="H37" class="blueH"></td></tr>
+                <tr><td id="H40" class="redH"></td><td id="H41" class="redH"></td><td></td><td></td>
+                <td></td><td></td><td id="H46" class="blueH"></td><td id="H47" class="blueH"></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
             </tbody>
         </table>
         <div class="box" id="control"
@@ -252,15 +236,15 @@
             <div class="button" onclick="location = './1.0.html'" style="width: 20px; height: 20px;">
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_black_20dp.png">
             </div>
-            Kriegspiel Chess
-            <div class="button" onclick="location = './krieg'" style="width: 20px; height: 20px;">
+            Classical Chess
+            <div class="button" onclick="location = '../'" style="width: 20px; height: 20px;">
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_black_20dp.png">
             </div>
             <div class="button" onclick="$('#settings').fadeOut()" style="position: absolute; left: 20px; bottom: 20px;">
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/close_black_24dp.png">
             </div>
         </div>
-        <div class="button" onclick="location = '../'" style="position: absolute; bottom: 5px; left: 8px;" title="Home">
+        <div class="button" onclick="location = '../../'" style="position: absolute; bottom: 5px; left: 8px;" title="Home">
             <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/home_black_24dp.png">
         </div>
         <div class="button" onclick="giveUp()" style="position: absolute; bottom: 5px; left: 56px;" title="Give up">
@@ -272,7 +256,9 @@
         </div>
         <div class="button" title="About" onclick="
         alert('instruction.png', 'About . . .'
-        , 'The higher level pieces can eat the lower ones. The game is full of luck!'
+        , 'The higher level pieces can eat the lower ones. There are eight Camps on the 8×8 board. If one of your pieces'
+        + ' steps on an enemy\'s Camp, that Camp will be ocuppied by you. '
+        + 'If all of your enemy\'s pieces are eaten or all of your enemies\'s Camps are ocuppied by you, you will win. '
         + '<hr><small>Version 1.2.0' 
         + '<ul><li>Develop a new mode Kriegspiel</li><li>Fix some bugs</li></ul></small>'
         + '<hr><small>Version 1.1.10.1' 
