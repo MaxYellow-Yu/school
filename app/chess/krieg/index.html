@@ -215,9 +215,10 @@
         </table>
         <div class="box" id="control"
         style="position: absolute; left: 8px; top: 59px; padding: 20px 20px 10px 20px; 
-        width: 370px; height: 210px; display: none;">
+        width: 370px; height: 260px; display: none;">
             <img id="control-img" src="" style="width: 100px;"><br>
             <b onclick="openName(this.innerHTML)" style="cursor: pointer;" id="control-name"></b>
+            <div id="champion" style="max-width: 100px;"></div>
             <div id="blood" style="max-width: 100px;"></div>
             <div id="ridable"></div>
             <div style="position: absolute; left: 130px; top: 20px; max-width: 245px;
@@ -233,7 +234,7 @@
         style="position: absolute; left: 500px; top: 59px; padding: 20px 20px 10px 20px; 
         width: 370px; height: 210px; display: none; font-family: Cuprum;">
             Version 1.0
-            <div class="button" onclick="location = './1.0.html'" style="width: 20px; height: 20px;">
+            <div class="button" onclick="location = '../1.0.html'" style="width: 20px; height: 20px;">
                 <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/send_black_20dp.png">
             </div>
             Classical Chess
@@ -259,6 +260,8 @@
         , 'The higher level pieces can eat the lower ones. There are eight Camps on the 8×8 board. If one of your pieces'
         + ' steps on an enemy\'s Camp, that Camp will be ocuppied by you. '
         + 'If all of your enemy\'s pieces are eaten or all of your enemies\'s Camps are ocuppied by you, you will win. '
+        + '<hr><small>Version 1.2.1' 
+        + '<ul><li>Fix some bugs</li></ul></small>'
         + '<hr><small>Version 1.2.0' 
         + '<ul><li>Develop a new mode Kriegspiel</li><li>Fix some bugs</li></ul></small>'
         + '<hr><small>Version 1.1.10.1' 
@@ -346,20 +349,78 @@
             'The game will not be updated next week if there are no bugs. ')">Notice
             <span style="color: pink; border-color: pink;">NEW</span></li>
             <li class="devider"></li> -->
+            <li class="menu-item" onclick="alert('notice.png', 'Champion!', 
+            'Now the champions will be shown off in the info window. If you win the first prize in one tournament, '
+            + 'you will got a grey medal(<img src=\'../../../img/max-grey.png\' style=\'width: 25px\'>). '
+            + 'Four grey medals will be turned into a golden medal'
+            + '(<img src=\'../../../img/max-golden.png\' style=\'width: 25px\'>). Four golden medals '
+            + 'will be turned into a crystal medal(<img src=\'../../../img/max-crystal.png\' style=\'width: 25px\'>)'
+            + '. Developer will get 4 crystal medals at first, of course. ')">
+            Champion! <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="devider"></li>
             <li class="menu-item" onclick="alert('trophy.png',
-            '4st Chess Tournament', 
-            '4st Chess Tournament took place on 2021/6/12 in Zerxif\'s class. KYL won the first prize, followed by QHY & CYB. ')">
-            4st Chess Tournament <span style="color: pink; border-color: pink;">NEW</span></li>
+            '6st Chess Tournament', 
+            '6st Chess Tournament took place on 2021/6/28 in 201 room after the Final-Test. KYL won the first prize. '
+            + 'There were 14 games and KYL took place in 8 of them. KYL has won 8 times. Here are the details<hr>'
+            + '<b>Chess</b><br>'
+            + 'kyl:zql=2:0<br>'
+            + 'kyl:sbw=1:0<br>'
+            + 'kyl:wlc=1:0<br>'
+            + 'wlc:zql=2:1<br>'
+            + 'kyl:ajw=1:0<br><hr>'
+            + '<b>Kriegspiel</b><br>'
+            + 'kyl:zql=3:0<br>'	
+            + 'wlc:zql=2:1<br>')">6st Chess Tounament <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="devider"></li>
+            <li class="menu-item" onclick="alert('trophy.png',
+            '5st Chess Tournament', 
+            '5st Chess Tournament took place on 2021/6/12 in Zerxif\'s class. KYL won the first prize, followed by'
+            + 'QHY & CYB. Here are the details<hr>'
+            + 'qjh 0<br>'
+            + 'qhy 1<br>'
+            + 'kyl 2<br>'
+            + 'cyb 1<br><hr>'
+            + 'qjh \< qhy <br>'
+            + 'kyl \> qhy <br>'	
+            + 'qjh \< kyl <br>'
+            + 'cyb \> qhy <br>')">5st Chess Tounament <span style="color: pink; border-color: pink;">NEW</span></li>
             <li class="devider"></li>
             <li class="menu-item" onclick="alert('instruction.png', 'Version 1.2.0', 
-            '<ul><li>Develop a new mode Kriegspiel</li><li>Fix some bugs</li></ul>')">
-            Version 1.2.0 <span style="color: pink; border-color: pink;">NEW</span></li>
+            '<ul><li>Fix some bugs</li></ul>')">
+            Version 1.2.1 <span style="color: pink; border-color: pink;">NEW</span></li>
         </ul></div>
         <div><ul class="menu-box box" id="ct" style="left: 206px;">
             <li class="menu-item" onclick="alert('trophy.png',
+            '6st Chess Tournament', 
+            '6st Chess Tournament took place on 2021/6/28 in 201 room after the Final-Test. KYL won the first prize. '
+            + 'There were 14 games and KYL took place in 8 of them. KYL has won 8 times. Here are the details<hr>'
+            + '<b>Chess</b><br>'
+            + 'kyl:zql=2:0<br>'
+            + 'kyl:sbw=1:0<br>'
+            + 'kyl:wlc=1:0<br>'
+            + 'wlc:zql=2:1<br>'
+            + 'kyl:ajw=1:0<br><hr>'
+            + '<b>Kriegspiel</b><br>'
+            + 'kyl:zql=3:0<br>'	
+            + 'wlc:zql=2:1<br>')">6st Chess Tounament <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="devider"></li>
+            <li class="menu-item" onclick="alert('trophy.png',
+            '5st Chess Tournament', 
+            '5st Chess Tournament took place on 2021/6/12 in Zerxif\'s class. KYL won the first prize, followed by'
+            + 'QHY & CYB. Here are the details<hr>'
+            + 'qjh 0<br>'
+            + 'qhy 1<br>'
+            + 'kyl 2<br>'
+            + 'cyb 1<br><hr>'
+            + 'qjh \< qhy <br>'
+            + 'kyl \> qhy <br>'	
+            + 'qjh \< kyl <br>'
+            + 'cyb \> qhy <br>')">5st Chess Tounament <span style="color: pink; border-color: pink;">NEW</span></li>
+            <li class="devider"></li>
+            <li class="menu-item" onclick="alert('trophy.png',
             '4st Chess Tournament', 
             '4st Chess Tournament took place on 2021/6/12 in Zerxif\'s class. KYL won the first prize, followed by QHY & CYB. ')">
-            4st Chess Tournament <span style="color: pink; border-color: pink;">NEW</span></li>
+            4st Chess Tournament</li>
             <li class="devider"></li>
             <li class="menu-item" onclick="alert('trophy.png',
             '3rd Chess Tournament', 
